@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "544584c646263e93ac7117b5508de0d5725d3f3aac4f4337e8caf18f950464df"
+            "sha256": "0e3752c42f4abaa5408b05930fbdbe5aed722b1e97b8f3afb4a154911bbba955"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.7.0"
+            "python_version": "3.7.1"
         },
         "sources": [
             {
@@ -793,7 +793,8 @@
         },
         "ipython-genutils": {
             "hashes": [
-                "sha256:72dd37233799e619666c9f639a9da83c34013a73e8bbc79a7a6348d93c61fab8"
+                "sha256:72dd37233799e619666c9f639a9da83c34013a73e8bbc79a7a6348d93c61fab8",
+                "sha256:eb2e116e75ecef9d4d228fdc66af54269afa26ab4463042e33785b887c628ba8"
             ],
             "version": "==0.2.0"
         },
@@ -896,6 +897,7 @@
         },
         "parso": {
             "hashes": [
+                "sha256:35704a43a3c113cce4de228ddb39aab374b8004f4f2407d070b6a2ca784ce8a2",
                 "sha256:895c63e93b94ac1e1690f5fdd40b65f07c8171e3e53cbd7793b5b96c0e0a7f24"
             ],
             "version": "==0.3.1"
@@ -1004,6 +1006,7 @@
         },
         "ptyprocess": {
             "hashes": [
+                "sha256:923f299cc5ad920c68f2bc0bc98b75b9f838b93b599941a6b63ddbc2476394c0",
                 "sha256:d7cc528d76e76342423ca640335bd3633420dc1366f258cb31d05e865ef5ca1f"
             ],
             "version": "==0.6.0"
@@ -1234,6 +1237,7 @@
         },
         "wcwidth": {
             "hashes": [
+                "sha256:3df37372226d6e63e1b1e1eda15c594bca98a22d33a23832a90998faa96bc65e",
                 "sha256:f4ebe71925af7b40a864553f761ed559b43544f8f71746c2d756c7fe788ade7c"
             ],
             "version": "==0.1.7"
