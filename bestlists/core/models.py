@@ -6,7 +6,7 @@ from bestlists.users.models import User
 
 
 class MasterList(TimeStampedModel):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
 class TodoList(TimeStampedModel):
@@ -14,7 +14,7 @@ class TodoList(TimeStampedModel):
     name = models.TextField()
 
 
-class ListItem:
+class ListItem(TimeStampedModel):
     todo_list = models.ForeignKey(TodoList, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     due_date = models.DateField()

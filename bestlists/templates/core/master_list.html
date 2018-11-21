@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Master List{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Master List</h2>
+
+  <div class="list-group">
+    {% for list_item in master_list %}
+        <h4 class="list-group-item-heading">{{ list_item.description }}</h4>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

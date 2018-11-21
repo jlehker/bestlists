@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Todo{% endblock %}
+
+{% block content %}
+  <h1>Create Todo</h1>
+  <form class="form-horizontal" method="post" action="{% url 'core:create-item' %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn">Create</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}
