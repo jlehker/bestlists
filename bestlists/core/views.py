@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.utils.timezone import now, localdate
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, FormView
 
+from bestlists.core.forms import TodoItemForm
 from bestlists.core.models import MasterList, ListItem, TodoList
 
 
@@ -18,19 +19,19 @@ class MasterListView(LoginRequiredMixin, ListView):
 master_list_view = MasterListView.as_view()
 
 
-class ListItemCreateView(LoginRequiredMixin, CreateView):
+class ListItemCreateView(LoginRequiredMixin, FormView):
 
     model = ListItem
-    fields = ["description"]
     success_url = reverse_lazy("core:master-list")
+    form_class = TodoItemForm
+    template_name = "core/listitem_form.html"
 
     def form_valid(self, form):
         master_list, _ = MasterList.objects.get_or_create(owner=self.request.user)
-        todo_list, _ = TodoList.objects.get_or_create(
-            name="main", master_list=master_list
-        )
+        todo_list, _ = TodoList.objects.get_or_create(name="main", master_list=master_list)
         form.instance.todo_list = todo_list
         form.instance.due_date = localdate(now())
+        form.save()
         return super().form_valid(form)
 
 
