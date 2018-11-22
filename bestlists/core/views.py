@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now, localdate
 from django.views.generic import ListView, FormView
@@ -19,12 +20,12 @@ class MasterListView(LoginRequiredMixin, ListView):
 master_list_view = MasterListView.as_view()
 
 
-class ListItemCreateView(LoginRequiredMixin, FormView):
+class TodoListView(LoginRequiredMixin, FormView):
 
     model = ListItem
-    success_url = reverse_lazy("core:master-list")
+    success_url = reverse_lazy("core:create-item")
     form_class = TodoItemForm
-    template_name = "core/listitem_form.html"
+    template_name = "core/todo_list.html"
 
     def form_valid(self, form):
         todo_list, _ = TodoList.objects.get_or_create(name="main", owner=self.request.user)
@@ -33,5 +34,13 @@ class ListItemCreateView(LoginRequiredMixin, FormView):
         form.save()
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        """Use this to add extra context."""
+        todo_list, _ = TodoList.objects.get_or_create(name="main", owner=self.request.user)
+        context = super(TodoListView, self).get_context_data(**kwargs)
+        context["list_items"] = todo_list.listitem_set.order_by("-created")
+        context["list_name"] = f"{todo_list.name.capitalize()} List"
+        return context
 
-create_item_list = ListItemCreateView.as_view()
+
+todo_list_view = TodoListView.as_view()

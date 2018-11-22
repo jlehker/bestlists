@@ -3,14 +3,17 @@
 {% block title %}Master List{% endblock %}
 
 {% block content %}
-<div class="container">
-  <h2>Master List</h2>
-
-  <div class="list-group">
-    {% for list_item in master_list %}
-        <h4 class="list-group-item-heading">{{ list_item.description }}</h4>
-      </a>
-    {% endfor %}
-  </div>
-</div>
-{% endblock content %}
+    <div class="card">
+        <div class="card-header">
+            Master List
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">All your todos will show up here.</h5>
+            <div class="list-group">
+                {% for todo in master_list %}
+                    <a href="#" class="list-group-item list-group-item-action">{{ todo.description }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

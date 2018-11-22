@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Todo{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            {{ list_name }}
+        </div>
+        <div class="card-body">
+            <form class="form-horizontal" method="post" action="{% url 'core:create-item' %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">Create</button>
+                    </div>
+                </div>
+            </form>
+            <br/>
+            <div class="list-group">
+                {% for todo in list_items %}
+                    <a href="#" class="list-group-item list-group-item-action">{{ todo.description }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
