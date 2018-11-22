@@ -15,7 +15,10 @@ class ListItem(TimeStampedModel):
 
 class TodoList(TimeStampedModel):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    name = models.TextField(unique=True)
+    name = models.TextField()
+
+    class Meta:
+        unique_together = ("owner", "name")
 
     def add_todo(self, description: str, due_date: datetime.date) -> ListItem:
         return ListItem.objects.create(todo_list=self, description=description, due_date=due_date)
