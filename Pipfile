@@ -16,13 +16,13 @@ django-redis = "~=4.10"
 djangorestframework = "==3.9.0"
 coreapi = "==2.3.3"
 gunicorn = "==19.9.0"
-psycopg2 = "~=2.7"
 django-storages = {version = "==1.7.1",extras = ["boto3"]}
 django-anymail = {version = "==5.0",extras = ["mailgun"]}
 Pillow = "==5.3.0"
 "argon2_cffi" = "==18.3.0"
 Django = "~=2.1"
 raven = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pytz = "==2018.7"

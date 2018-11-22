@@ -4,7 +4,7 @@ from django.utils.timezone import now, localdate
 from django.views.generic import ListView, FormView
 
 from bestlists.core.forms import TodoItemForm
-from bestlists.core.models import MasterList, ListItem, TodoList
+from bestlists.core.models import ListItem, TodoList
 
 
 class MasterListView(LoginRequiredMixin, ListView):
@@ -13,7 +13,7 @@ class MasterListView(LoginRequiredMixin, ListView):
     context_object_name = "master_list"
 
     def get_queryset(self):
-        return ListItem.objects.filter(todo_list__master_list__owner=self.request.user)
+        return ListItem.objects.filter(todo_list__owner=self.request.user)
 
 
 master_list_view = MasterListView.as_view()
@@ -27,8 +27,7 @@ class ListItemCreateView(LoginRequiredMixin, FormView):
     template_name = "core/listitem_form.html"
 
     def form_valid(self, form):
-        master_list, _ = MasterList.objects.get_or_create(owner=self.request.user)
-        todo_list, _ = TodoList.objects.get_or_create(name="main", master_list=master_list)
+        todo_list, _ = TodoList.objects.get_or_create(name="main", owner=self.request.user)
         form.instance.todo_list = todo_list
         form.instance.due_date = localdate(now())
         form.save()
