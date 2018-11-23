@@ -4,24 +4,44 @@
 {% block title %}Create Todo{% endblock %}
 
 {% block content %}
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">{{ list_name }}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Weekly</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Monthly</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Yearly</a>
+      </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#"><span class="fa fa-plus-square-o fa-lg"></span></a>
+    </li>
+    </ul>
     <div class="card">
-        <div class="card-header">
-            {{ list_name }}
-        </div>
         <div class="card-body">
             <form class="form-horizontal" method="post" action="{% url 'core:create-item' %}">
                 {% csrf_token %}
                 {{ form|crispy }}
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn">Create</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
                     </div>
                 </div>
             </form>
             <br/>
             <div class="list-group">
                 {% for todo in list_items %}
-                    <a href="#" class="list-group-item list-group-item-action">{{ todo.description }}</a>
+                    <li class="list-group-item list-group-item-action">
+                        <span class="font-weight-bold">{{ todo.description }}</span>
+                        <span class="float-right button-group">
+                            <a href="#" class="btn btn-outline-primary"><span class="fa fa-pencil fa-lg"></span> Edit</a>
+                            <a href="#" class="btn btn-outline-danger"><span class="fa fa-trash-o fa-lg"></span> Delete</a>
+                        </span>
+                    </li>
                 {% endfor %}
             </div>
         </div>
