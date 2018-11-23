@@ -18,9 +18,31 @@
             <a class="nav-link" href="#">Yearly</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#"><span class="fa fa-plus-square-o fa-lg"></span></a>
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#createListModal">
+                <span class="fa fa-plus-square-o fa-lg"></span>
+            </a>
         </li>
     </ul>
+    <div class="modal fade" id="createListModal" tabindex="-1" role="dialog" aria-labelledby="createListModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create New List</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Coming soon!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><span class="fa fa-ban fa-lg"></span> Cancel</button>
+                    <button type="button" class="btn btn-primary"><span class="fa fa-save fa-lg"></span> Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-body">
             <form class="form-horizontal" method="post" action="{% url 'core:create-item' %}">
@@ -41,8 +63,7 @@
                             <form class="form-inline" method="post" action="{% url 'core:delete-item' todo.pk %}">
                                 {% csrf_token %}
                                 <a href="#" class="btn btn-outline-primary"><span class="fa fa-pencil fa-lg"></span> Edit</a>
-                                <button type="submit" class="btn btn-outline-danger"><span
-                                        class="fa fa-trash-o fa-lg"></span> Delete</button>
+                                <button type="submit" class="btn btn-outline-danger"><span class="fa fa-trash-o fa-lg"></span> Delete</button>
                             </form>
                         </span>
                     </li>
