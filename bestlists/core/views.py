@@ -1,8 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now, localdate
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, DeleteView
 
 from bestlists.core.forms import TodoItemForm
 from bestlists.core.models import ListItem, TodoList
@@ -44,3 +43,14 @@ class TodoListView(LoginRequiredMixin, FormView):
 
 
 todo_list_view = TodoListView.as_view()
+
+
+class DeleteListItemView(LoginRequiredMixin, DeleteView):
+
+    success_url = reverse_lazy("core:create-item")
+
+    def get_queryset(self):
+        return ListItem.objects.filter(todo_list__owner=self.request.user)
+
+
+delete_list_item_view = DeleteListItemView.as_view()
