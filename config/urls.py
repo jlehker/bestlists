@@ -6,14 +6,14 @@ from django.views import defaults as default_views
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    path("", RedirectView.as_view(pattern_name="core:create-item")),
+    path("", RedirectView.as_view(pattern_name="core:lists-view")),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("bestlists.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("lists/", include("bestlists.core.urls", namespace="core")),
+    path("app/", include("bestlists.core.urls", namespace="core")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
