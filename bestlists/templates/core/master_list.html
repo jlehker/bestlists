@@ -15,17 +15,21 @@
                         <div class="btn-toolbar justify-content-between" role="toolbar">
                             <span class="font-weight-bold">{{ todo.description }}</span>
                             <div class="btn-group btn-group-sm" role="group">
-                                  <button type="button" class="btn btn-outline-success"><span class="fa fa-check fa-xs"></span> Mark Complete</button>
-                                  <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      <span class="fa fa-clock-o fa-xs"></span> Postpone
-                                  </button>
-                                  <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Tomorrow</a>
-                                    <a class="dropdown-item" href="#">Next Week</a>
-                                    <a class="dropdown-item" href="#">Skip Occurrence</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Specific Date</a>
-                                  </div>
+                                <button type="button" class="btn btn-outline-success"><span class="fa fa-check fa-xs"></span> Mark Complete</button>
+                                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <span class="fa fa-clock-o fa-xs"></span> Postpone
+                                </button>
+                                <form method="post" action="{% url 'core:postpone-item' todo.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" name="days" value="1">Tomorrow</button>
+                                        <button class="dropdown-item" name="days" value="2">Two Days</button>
+                                        <button class="dropdown-item" name="days" value="7">Next Week</button>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Specific Date</a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </li>

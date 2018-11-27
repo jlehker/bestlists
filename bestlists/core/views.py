@@ -1,25 +1,28 @@
+from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.timezone import now, localdate
-from django.views.generic import ListView, DeleteView, CreateView, TemplateView
+from django.views import View
+from django.views.generic import DeleteView, CreateView, TemplateView, ArchiveIndexView
 
 from bestlists.core.forms import ListItemForm, TodoListForm
 from bestlists.core.models import ListItem, TodoList
 
 
-class MasterListView(LoginRequiredMixin, ListView):
+class MasterListView(LoginRequiredMixin, ArchiveIndexView):
     model = ListItem
     template_name = "core/master_list.html"
     context_object_name = "master_list"
     paginate_by = 10
+    date_field = "due_date"
+    allow_future = False
 
     def get_queryset(self):
-        return ListItem.objects.filter(
-            todo_list__owner=self.request.user, due_date__lte=localdate(now())
-        )
+        return ListItem.objects.filter(todo_list__owner=self.request.user)
 
 
 master_list_view = MasterListView.as_view()
@@ -83,6 +86,24 @@ class ListItemDelete(LoginRequiredMixin, DeleteView):
 
 
 list_item_delete_view = ListItemDelete.as_view()
+
+
+class ListItemPostpone(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        redirect_url = request.POST.get("next", reverse("core:master-list"))
+        try:
+            list_item = ListItem.objects.get(pk=self.kwargs["pk"])
+            list_item.due_date = localdate(now()) + relativedelta(
+                days=int(request.POST.get("days", 0))
+            )
+            list_item.save()
+        except (ListItem.DoesNotExist, ValueError):
+            messages.add_message(request, messages.ERROR, "Couldn't postpone item.")
+
+        return HttpResponseRedirect(redirect_url)
+
+
+postpone_item_view = ListItemPostpone.as_view()
 
 
 class TodoListCreate(LoginRequiredMixin, CreateView):
