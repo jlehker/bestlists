@@ -6,22 +6,22 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.timezone import now, localdate
 from django.views import View
-from django.views.generic import DeleteView, CreateView, TemplateView, ArchiveIndexView
+from django.views.generic import DeleteView, CreateView, TemplateView, ListView
 
 from bestlists.core.forms import ListItemForm, TodoListForm
 from bestlists.core.models import ListItem, TodoList
 
 
-class MasterListView(LoginRequiredMixin, ArchiveIndexView):
+class MasterListView(LoginRequiredMixin, ListView):
     model = ListItem
     template_name = "core/master_list.html"
     context_object_name = "master_list"
     paginate_by = 10
-    date_field = "due_date"
-    allow_future = False
 
     def get_queryset(self):
-        return ListItem.objects.filter(todo_list__owner=self.request.user)
+        return ListItem.objects.filter(
+            todo_list__owner=self.request.user, due_date__lte=localdate(now())
+        )
 
 
 master_list_view = MasterListView.as_view()
