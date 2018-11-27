@@ -8,7 +8,7 @@ class ListItemForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ListItemForm, self).__init__(*args, **kwargs)
-        self.fields["description"].widget.attrs.update({"autofocus": ""})
+        self.fields["description"].widget.attrs.update({"autofocus": "autofocus"})
 
     class Meta:
         model = ListItem

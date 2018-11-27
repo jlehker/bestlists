@@ -10,7 +10,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create New List</h5>
+                    <h5 class="modal-title">Create New List</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -32,6 +32,35 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form-horizontal" method="post" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <div class="modal-body">
+{#                        {{ list_item_form|crispy }}#}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
+                                class="fa fa-ban fa-lg"></span> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" disabled><span class="fa fa-save fa-lg"></span> Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
 
         <div class="card-header">
@@ -54,8 +83,11 @@
                       action="{% url 'core:delete-todo-list' active_list_pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
-                    <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="bottom"
-                            title="Delete Todo List" {% if not can_delete %}disabled{% endif %}><span class="fa fa-trash fa-xs"></span></button>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="button" class="btn btn-outline-info" disabled><span class="fa fa-edit fa-xs"></span></button>
+                        <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="bottom"
+                                title="Delete Todo List" {% if not can_delete %}disabled{% endif %}><span class="fa fa-trash fa-xs"></span></button>
+                    </div>
                 </form>
                 <br/>
             <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list_pk %}">
@@ -78,7 +110,7 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-outline-info">
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#editItemModal">
                                         <span class="fa fa-pencil fa-xs"></span> Edit
                                     </button>
                                     <button type="submit" class="btn btn-outline-danger">
