@@ -15,8 +15,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="form-horizontal" method="post" action="{% url 'core:create-todo-list' active_list_pk %}">
+                <form class="form-horizontal" method="post" action="{% url 'core:create-todo-list' %}">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
                     <div class="modal-body">
                         {{ todo_list_form|crispy }}
                     </div>
@@ -52,12 +53,14 @@
                 <form class="form-horizontal float-right" method="post"
                       action="{% url 'core:delete-todo-list' active_list_pk %}">
                     {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
                     <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="bottom"
                             title="Delete Todo List" {% if not can_delete %}disabled{% endif %}><span class="fa fa-trash fa-xs"></span></button>
                 </form>
                 <br/>
             <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list_pk %}">
                 {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
                 {{ list_item_form|crispy }}
                 <div class="control-group">
                     <div class="controls">
@@ -71,8 +74,9 @@
                     <li class="list-group-item list-group-item-action py-2">
                         <div class="btn-toolbar justify-content-between" role="toolbar">
                             <span class="font-weight-bold">{{ todo.description }}</span>
-                            <form class="form-inline" method="post" action="{% url 'core:delete-item' todo.pk active_list_pk %}">
+                            <form class="form-inline" method="post" action="{% url 'core:delete-item' todo.pk %}">
                                 {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <button type="button" class="btn btn-outline-info">
                                         <span class="fa fa-pencil fa-xs"></span> Edit

@@ -2,7 +2,6 @@ from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.timezone import now, localdate
@@ -68,7 +67,7 @@ class ListItemCreate(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("core:lists-view", kwargs={"pk": self.kwargs["pk"]})
+        return self.request.POST.get("next", self.success_url)
 
 
 list_item_create_view = ListItemCreate.as_view()
@@ -82,13 +81,15 @@ class ListItemDelete(LoginRequiredMixin, DeleteView):
         return ListItem.objects.filter(todo_list__owner=self.request.user)
 
     def get_success_url(self):
-        return reverse("core:lists-view", kwargs={"pk": self.kwargs["list_pk"]})
+        return self.request.POST.get("next", self.success_url)
 
 
 list_item_delete_view = ListItemDelete.as_view()
 
 
 class ListItemPostpone(LoginRequiredMixin, View):
+    """ Handle postponing items to another date. """
+
     def post(self, request, *args, **kwargs):
         redirect_url = request.POST.get("next", reverse("core:master-list"))
         try:
@@ -100,7 +101,7 @@ class ListItemPostpone(LoginRequiredMixin, View):
         except (ListItem.DoesNotExist, ValueError):
             messages.add_message(request, messages.ERROR, "Couldn't postpone item.")
 
-        return HttpResponseRedirect(redirect_url)
+        return redirect(redirect_url)
 
 
 postpone_item_view = ListItemPostpone.as_view()
@@ -114,16 +115,19 @@ class TodoListCreate(LoginRequiredMixin, CreateView):
 
     def post(self, request, *args, **kwargs):
         try:
-            super().post(request, *args, **kwargs)
+            return super().post(request, *args, **kwargs)
         except IntegrityError:
             messages.add_message(
                 request, messages.ERROR, "All of your Todo List names must be unique."
             )
-        return redirect(reverse("core:lists-view", kwargs={"pk": self.kwargs["list_pk"]}))
+            return redirect(request.POST.get("next", self.success_url))
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.request.POST.get("next", self.success_url)
 
 
 todo_list_create_view = TodoListCreate.as_view()

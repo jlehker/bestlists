@@ -17,9 +17,7 @@ urlpatterns = [
     path("lists/<int:pk>/", view=todo_list_view, name="lists-view"),
     path("postpone_list_item/<int:pk>/", view=postpone_item_view, name="postpone-item"),
     path("create_list_item/<int:pk>/", view=list_item_create_view, name="create-item"),
-    path(
-        "delete_list_item/<int:pk>/<int:list_pk>/", view=list_item_delete_view, name="delete-item"
-    ),
-    path("create_todo_list/<int:list_pk>/", view=todo_list_create_view, name="create-todo-list"),
+    path("delete_list_item/<int:pk>/", view=list_item_delete_view, name="delete-item"),
+    path("create_todo_list/", view=todo_list_create_view, name="create-todo-list"),
     path("delete_todo_list/<int:pk>/", view=todo_list_delete_view, name="delete-todo-list"),
 ]
