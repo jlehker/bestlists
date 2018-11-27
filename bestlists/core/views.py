@@ -11,12 +11,15 @@ from bestlists.core.models import ListItem, TodoList
 
 
 class MasterListView(LoginRequiredMixin, ListView):
-
+    model = ListItem
     template_name = "core/master_list.html"
     context_object_name = "master_list"
+    paginate_by = 10
 
     def get_queryset(self):
-        return ListItem.objects.filter(todo_list__owner=self.request.user)
+        return ListItem.objects.filter(
+            todo_list__owner=self.request.user, due_date__lte=localdate(now())
+        )
 
 
 master_list_view = MasterListView.as_view()
