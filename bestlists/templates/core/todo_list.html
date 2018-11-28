@@ -4,65 +4,7 @@
 {% block title %}Create Todo{% endblock %}
 
 {% block content %}
-
-    <div class="modal fade" id="createListModal" tabindex="-1" role="dialog" aria-labelledby="createListModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create New List</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form class="form-horizontal" method="post" action="{% url 'core:create-todo-list' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <div class="modal-body">
-                        {{ todo_list_form|crispy }}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
-                                class="fa fa-ban fa-lg"></span> Cancel
-                        </button>
-                        <button type="submit" class="btn btn-primary"><span class="fa fa-save fa-lg"></span> Create
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Item</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form class="form-horizontal" method="post" action="">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <div class="modal-body">
-{#                        {{ list_item_form|crispy }}#}
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><span
-                                class="fa fa-ban fa-lg"></span> Cancel
-                        </button>
-                        <button type="submit" class="btn btn-primary" disabled><span class="fa fa-save fa-lg"></span> Save
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <div class="card">
-
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 {% for todo_list in todo_lists %}
@@ -125,3 +67,9 @@
         </div>
     </div>
 {% endblock %}
+
+{% block modal %}
+    {% include "core/modals/create_list.html" %}
+    {% include "core/modals/edit_item.html" %}
+{% endblock %}
+
