@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.timezone import now, localdate
-from django.views.generic import DeleteView, CreateView, TemplateView
+from django.views.generic import DeleteView, CreateView, TemplateView, UpdateView
 
 from bestlists.core.forms import ListItemForm, TodoListForm
 from bestlists.core.models import ListItem, TodoList
@@ -68,6 +68,21 @@ class ListItemDelete(LoginRequiredMixin, DeleteView):
 
 
 list_item_delete_view = ListItemDelete.as_view()
+
+
+class ListItemUpdate(LoginRequiredMixin, UpdateView):
+
+    success_url = reverse_lazy("core:lists-view")
+    fields = ["description"]
+
+    def get_queryset(self):
+        return ListItem.objects.filter(todo_list__owner=self.request.user)
+
+    def get_success_url(self):
+        return self.request.POST.get("next", self.success_url)
+
+
+list_item_update_view = ListItemUpdate.as_view()
 
 
 class TodoListCreate(LoginRequiredMixin, CreateView):

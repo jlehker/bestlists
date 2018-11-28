@@ -52,7 +52,7 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#editItemModal">
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-item-description="{{ todo.description }}" data-item-update-url="{% url 'core:update-item' todo.pk %}" data-target="#editItemModal">
                                         <span class="fa fa-pencil fa-xs"></span> Edit
                                     </button>
                                     <button type="submit" class="btn btn-outline-danger">
@@ -72,4 +72,3 @@
     {% include "core/modals/create_list.html" %}
     {% include "core/modals/edit_item.html" %}
 {% endblock %}
-
