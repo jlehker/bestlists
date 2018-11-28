@@ -43,3 +43,20 @@ class ListItemPostpone(LoginRequiredMixin, View):
 
 
 postpone_item_view = ListItemPostpone.as_view()
+
+
+class ListItemComplete(LoginRequiredMixin, View):
+    """ Handle postponing items to another date. """
+
+    def post(self, request, *args, **kwargs):
+        redirect_url = request.POST.get("next", reverse("core:master-list"))
+        try:
+            list_item = ListItem.objects.get(pk=self.kwargs["pk"])
+            list_item.mark_complete()
+        except (ListItem.DoesNotExist, ValueError):
+            messages.add_message(request, messages.ERROR, "Couldn't mark item complete.")
+
+        return redirect(redirect_url)
+
+
+complete_item_view = ListItemComplete.as_view()

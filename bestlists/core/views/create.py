@@ -27,7 +27,9 @@ class TodoListView(LoginRequiredMixin, TemplateView):
         context["active_list_pk"] = todo_list.pk
         context["can_delete"] = True if todo_list.name != "main" else False
         context["list_item_form"] = ListItemForm()
-        context["todo_list_form"] = TodoListForm()
+        context["todo_list_form"] = TodoListForm(
+            initial={"date_unit": TodoList.DATE_UNIT.weeks, "interval_duration": 1}
+        )
         return context
 
 

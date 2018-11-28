@@ -5,13 +5,13 @@ pytestmark = pytest.mark.django_db
 
 
 def test_delete_list():
-    assert reverse("core:delete-todo-list", kwargs={"pk": 1}) == "/app/delete_todo_list/1/"
-    assert resolve("/app/delete_todo_list/1/").view_name == "core:delete-todo-list"
+    assert reverse("core:delete-todo-list", kwargs={"pk": 1}) == "/app/lists/delete/1/"
+    assert resolve("/app/lists/delete/1/").view_name == "core:delete-todo-list"
 
 
 def test_create_list():
-    assert reverse("core:create-todo-list") == "/app/create_todo_list/"
-    assert resolve("/app/create_todo_list/").view_name == "core:create-todo-list"
+    assert reverse("core:create-todo-list") == "/app/lists/create/"
+    assert resolve("/app/lists/create/").view_name == "core:create-todo-list"
 
 
 def test_lists():

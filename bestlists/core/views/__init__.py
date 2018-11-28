@@ -6,4 +6,4 @@ from .create import (
     list_item_update_view,
     list_item_delete_view,
 )
-from .master import master_list_view, postpone_item_view
+from .master import master_list_view, postpone_item_view, complete_item_view

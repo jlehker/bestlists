@@ -15,7 +15,11 @@
                         <div class="btn-toolbar justify-content-between" role="toolbar">
                             <span class="font-weight-bold">{{ todo.description }}</span>
                             <div class="btn-group btn-group-sm" role="group">
-                                <button type="button" class="btn btn-outline-success"><span class="fa fa-check fa-xs"></span> Mark Complete</button>
+                                <form method="post" action="{% url 'core:complete-item' todo.pk %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{ request.path }}">
+                                    <button type="submit" class="btn btn-outline-success"><span class="fa fa-check fa-xs"></span> Mark Complete</button>
+                                </form>
                                 <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   <span class="fa fa-clock-o fa-xs"></span> Postpone
                                 </button>

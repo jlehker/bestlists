@@ -9,6 +9,7 @@ from bestlists.core.views import (
     todo_list_create_view,
     todo_list_delete_view,
     postpone_item_view,
+    complete_item_view,
 )
 
 app_name = "core"
@@ -16,10 +17,11 @@ urlpatterns = [
     path("", view=master_list_view, name="master-list"),
     path("lists", view=todo_list_view, name="lists-view"),
     path("lists/<int:pk>/", view=todo_list_view, name="lists-view"),
-    path("postpone_list_item/<int:pk>/", view=postpone_item_view, name="postpone-item"),
-    path("create_list_item/<int:pk>/", view=list_item_create_view, name="create-item"),
-    path("update_list_item/<int:pk>/", view=list_item_update_view, name="update-item"),
-    path("delete_list_item/<int:pk>/", view=list_item_delete_view, name="delete-item"),
-    path("create_todo_list/", view=todo_list_create_view, name="create-todo-list"),
-    path("delete_todo_list/<int:pk>/", view=todo_list_delete_view, name="delete-todo-list"),
+    path("lists/create/", view=todo_list_create_view, name="create-todo-list"),
+    path("lists/delete/<int:pk>/", view=todo_list_delete_view, name="delete-todo-list"),
+    path("items/postpone/<int:pk>/", view=postpone_item_view, name="postpone-item"),
+    path("items/complete/<int:pk>/", view=complete_item_view, name="complete-item"),
+    path("items/create/<int:pk>/", view=list_item_create_view, name="create-item"),
+    path("items/update/<int:pk>/", view=list_item_update_view, name="update-item"),
+    path("items/delete/<int:pk>/", view=list_item_delete_view, name="delete-item"),
 ]

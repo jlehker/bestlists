@@ -17,7 +17,9 @@ class ListItemForm(forms.ModelForm):
 
 class TodoListForm(forms.ModelForm):
     name = forms.CharField(label="List Name", max_length=100)
+    interval_duration = forms.IntegerField(label="Duration", min_value=1, max_value=365)
+    date_unit = forms.ChoiceField(label="Units", choices=TodoList.DATE_UNIT)
 
     class Meta:
         model = TodoList
-        fields = ("name",)
+        fields = ("name", "interval_duration", "date_unit")
