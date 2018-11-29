@@ -32,12 +32,13 @@ class ListItemPostpone(LoginRequiredMixin, View):
         redirect_url = request.POST.get("next", reverse("core:master-list"))
         try:
             list_item = ListItem.objects.get(pk=self.kwargs["pk"])
-            list_item.due_date = localdate(now()) + relativedelta(
-                days=int(request.POST.get("days", 0))
-            )
-            list_item.save()
+            list_item.postpone(int(request.POST.get("days", 0)))
         except (ListItem.DoesNotExist, ValueError):
             messages.add_message(request, messages.ERROR, "Couldn't postpone item.")
+        else:
+            messages.add_message(
+                request, messages.WARNING, f"Postponed until {list_item.due_date.isoformat()}."
+            )
 
         return redirect(redirect_url)
 
@@ -55,6 +56,10 @@ class ListItemComplete(LoginRequiredMixin, View):
             list_item.mark_complete()
         except (ListItem.DoesNotExist, ValueError):
             messages.add_message(request, messages.ERROR, "Couldn't mark item complete.")
+        else:
+            messages.add_message(
+                request, messages.INFO, f"Completed until {list_item.due_date.isoformat()}."
+            )
 
         return redirect(redirect_url)
 
