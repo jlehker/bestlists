@@ -22,9 +22,11 @@ class TodoListView(LoginRequiredMixin, TemplateView):
         except TodoList.DoesNotExist:
             return redirect(reverse("core:lists-view"))
         context = super(TodoListView, self).get_context_data(**kwargs)
-        context["todo_lists"] = TodoList.objects.filter(owner=self.request.user)
+        context["todo_lists"] = TodoList.objects.filter(owner=self.request.user).order_by(
+            "created"
+        )
         context["list_items"] = todo_list.listitem_set.order_by("-created")
-        context["active_list_pk"] = todo_list.pk
+        context["active_list"] = todo_list
         context["can_delete"] = True if todo_list.name != "main" else False
         context["list_item_form"] = ListItemForm()
         context["todo_list_form"] = TodoListForm(
@@ -88,6 +90,7 @@ list_item_update_view = ListItemUpdate.as_view()
 
 
 class TodoListCreate(LoginRequiredMixin, CreateView):
+    """ Creates a new list for items. """
 
     form_class = TodoListForm
     model = TodoList
@@ -113,7 +116,23 @@ class TodoListCreate(LoginRequiredMixin, CreateView):
 todo_list_create_view = TodoListCreate.as_view()
 
 
+class TodoListUpdate(LoginRequiredMixin, UpdateView):
+
+    success_url = reverse_lazy("core:lists-view")
+    fields = ["name", "frequency", "interval", "weekdays"]
+
+    def get_queryset(self):
+        return TodoList.objects.filter(owner=self.request.user)
+
+    def get_success_url(self):
+        return self.request.POST.get("next", self.success_url)
+
+
+todo_list_update_view = TodoListUpdate.as_view()
+
+
 class TodoListDelete(LoginRequiredMixin, DeleteView):
+    """ Deletes a list. """
 
     success_url = reverse_lazy("core:lists-view")
 

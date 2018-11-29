@@ -1,4 +1,3 @@
-from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
@@ -11,6 +10,8 @@ from bestlists.core.models import ListItem
 
 
 class MasterListView(LoginRequiredMixin, ListView):
+    """ Master view that includes all non-completed todos. """
+
     model = ListItem
     template_name = "core/master_list.html"
     context_object_name = "master_list"

@@ -9,7 +9,7 @@
             <ul class="nav nav-tabs card-header-tabs">
                 {% for todo_list in todo_lists %}
                     <li class="nav-item">
-                        <a class="nav-link {% if todo_list.pk == active_list_pk %}active{% endif %}" href="{% url 'core:lists-view' todo_list.pk %}">{{ todo_list.name.capitalize }}</a>
+                        <a class="nav-link {% if todo_list.pk == active_list.pk %}active{% endif %}" href="{% url 'core:lists-view' todo_list.pk %}">{{ todo_list.name.capitalize }}</a>
                     </li>
                 {% endfor %}
                 <li class="nav-item">
@@ -22,17 +22,27 @@
 
         <div class="card-body">
                 <form class="form-horizontal float-right" method="post"
-                      action="{% url 'core:delete-todo-list' active_list_pk %}">
+                      action="{% url 'core:delete-todo-list' active_list.pk %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-outline-info" disabled><span class="fa fa-edit fa-xs"></span></button>
-                        <button type="submit" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="bottom"
-                                title="Delete Todo List" {% if not can_delete %}disabled{% endif %}><span class="fa fa-trash fa-xs"></span></button>
+                        <button type="button"
+                                class="btn btn-outline-info"
+                                data-toggle="modal"
+                                data-target="#editListModal"
+{#                                data-todo-list='{{ active_list.as_json|safe }}'#}
+                                data-list-update-url='{% url 'core:update-todo-list' active_list.pk %}'
+                                {% if not can_delete %}disabled{% endif %}><span class="fa fa-edit fa-xs"></span></button>
+                        <button type="submit"
+                                class="btn btn-outline-danger"
+                                title="Delete Todo List"
+                                {% if not can_delete %}disabled{% endif %}>
+                            <span class="fa fa-trash fa-xs"></span>
+                        </button>
                     </div>
                 </form>
                 <br/>
-            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list_pk %}">
+            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pk %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
                 {{ list_item_form|crispy }}
@@ -71,4 +81,5 @@
 {% block modal %}
     {% include "core/modals/create_list.html" %}
     {% include "core/modals/edit_item.html" %}
+    {% include "core/modals/edit_list.html" %}
 {% endblock %}

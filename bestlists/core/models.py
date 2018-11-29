@@ -1,10 +1,12 @@
 import datetime
+import json
 from calendar import day_name
 
 from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule, DAILY, WEEKLY, MONTHLY, YEARLY, weekday
 from django.contrib.postgres import fields
 from django.db import models
+from django.forms import model_to_dict
 from django.utils.timezone import localdate, now
 from model_utils import Choices
 
@@ -63,3 +65,7 @@ class TodoList(TimeStampedModel):
 
     def add_todo(self, description: str, due_date: datetime.date) -> ListItem:
         return ListItem.objects.create(todo_list=self, description=description, due_date=due_date)
+
+    @property
+    def as_json(self) -> str:
+        return json.dumps(model_to_dict(self))
