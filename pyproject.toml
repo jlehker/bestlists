@@ -10,6 +10,6 @@ exclude = '''
   | _build
   | build
   | dist
-  | bestlists/core/migrations/
+  | todovoodoo/core/migrations/
 )/
 '''

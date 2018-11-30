@@ -1,4 +1,4 @@
-# bestlists documentation build configuration file, created by
+# todovoodoo documentation build configuration file, created by
 # sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -39,7 +39,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "bestlists"
+project = "todovoodoo"
 copyright = """2018, Jean-Michel Lehker"""
 
 # The version info for the project you're documenting, acts as replacement for
@@ -163,7 +163,7 @@ html_static_path = ["_static"]
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "bestlistsdoc"
+htmlhelp_basename = "todovoodoodoc"
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -180,13 +180,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    (
-        "index",
-        "bestlists.tex",
-        "bestlists Documentation",
-        """Jean-Michel Lehker""",
-        "manual",
-    )
+    ("index", "todovoodoo.tex", "todovoodoo Documentation", """Jean-Michel Lehker""", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -214,15 +208,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (
-        "index",
-        "bestlists",
-        "bestlists Documentation",
-        ["""Jean-Michel Lehker"""],
-        1,
-    )
-]
+man_pages = [("index", "todovoodoo", "todovoodoo Documentation", ["""Jean-Michel Lehker"""], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -236,10 +222,10 @@ man_pages = [
 texinfo_documents = [
     (
         "index",
-        "bestlists",
-        "bestlists Documentation",
+        "todovoodoo",
+        "todovoodoo Documentation",
         """Jean-Michel Lehker""",
-        "bestlists",
+        "todovoodoo",
         """The best todo list!""",
         "Miscellaneous",
     )

@@ -1,4 +1,4 @@
-bestlists
+todovoodoo
 =========
 
 The best todo list!
@@ -39,7 +39,7 @@ Running type checks with mypy:
 
 ::
 
-  $ mypy bestlists
+  $ mypy todovoodoo
 
 Test coverage
 ^^^^^^^^^^^^^

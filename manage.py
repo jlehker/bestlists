@@ -23,8 +23,8 @@ if __name__ == "__main__":
         raise
 
     # This allows easy placement of apps within the interior
-    # bestlists directory.
+    # todovoodoo directory.
     current_path = os.path.dirname(os.path.abspath(__file__))
-    sys.path.append(os.path.join(current_path, "bestlists"))
+    sys.path.append(os.path.join(current_path, "todovoodoo"))
 
     execute_from_command_line(sys.argv)

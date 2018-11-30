@@ -4,8 +4,8 @@ Base settings to build other settings files upon.
 
 import environ
 
-ROOT_DIR = environ.Path(__file__) - 3  # (bestlists/config/settings/base.py - 3 = bestlists/)
-APPS_DIR = ROOT_DIR.path("bestlists")
+ROOT_DIR = environ.Path(__file__) - 3  # (todovoodoo/config/settings/base.py - 3 = todovoodoo/)
+APPS_DIR = ROOT_DIR.path("todovoodoo")
 
 env = environ.Env()
 
@@ -38,7 +38,7 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///bestlists")}
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///todovoodoo")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
@@ -68,9 +68,9 @@ THIRD_PARTY_APPS = [
     "rest_framework",
 ]
 LOCAL_APPS = [
-    "bestlists.users.apps.UsersAppConfig",
+    "todovoodoo.users.apps.UsersAppConfig",
     # Your stuff: custom apps go here
-    "bestlists.core.apps.CoreConfig",
+    "todovoodoo.core.apps.CoreConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -78,7 +78,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "bestlists.contrib.sites.migrations"}
+MIGRATION_MODULES = {"sites": "todovoodoo.contrib.sites.migrations"}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -212,9 +212,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "bestlists.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "todovoodoo.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "bestlists.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "todovoodoo.users.adapters.SocialAccountAdapter"
 
 
 # Your stuff...

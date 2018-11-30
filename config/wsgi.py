@@ -1,5 +1,5 @@
 """
-WSGI config for bestlists project.
+WSGI config for todovoodoo project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable
@@ -19,10 +19,9 @@ import sys
 from django.core.wsgi import get_wsgi_application
 
 # This allows easy placement of apps within the interior
-# bestlists directory.
-app_path = os.path.abspath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), os.pardir))
-sys.path.append(os.path.join(app_path, 'bestlists'))
+# todovoodoo directory.
+app_path = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir))
+sys.path.append(os.path.join(app_path, "todovoodoo"))
 
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
@@ -30,7 +29,7 @@ sys.path.append(os.path.join(app_path, 'bestlists'))
 # os.environ["DJANGO_SETTINGS_MODULE"] = "config.settings.production"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
 
-if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
+if os.environ.get("DJANGO_SETTINGS_MODULE") == "config.settings.production":
     from raven.contrib.django.raven_compat.middleware.wsgi import Sentry
 
 # This application object is used by any WSGI server configured to use this
