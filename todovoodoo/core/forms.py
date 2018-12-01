@@ -18,8 +18,8 @@ class ListItemForm(forms.ModelForm):
 class TodoListForm(forms.ModelForm):
     name = forms.CharField(label="List Name", max_length=100)
     interval = forms.IntegerField(min_value=1, max_value=600)
-    weekdays = forms.TypedMultipleChoiceField(coerce=int, choices=TodoList.WEEKDAYS)
+    # weekdays = forms.TypedMultipleChoiceField(coerce=int, choices=TodoList.WEEKDAYS)
 
     class Meta:
         model = TodoList
-        fields = ("name", "interval", "frequency", "weekdays")
+        fields = ("name", "interval", "frequency")

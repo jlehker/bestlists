@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 from django.urls import reverse, resolve
 
@@ -5,8 +7,12 @@ pytestmark = pytest.mark.django_db
 
 
 def test_delete_list():
-    assert reverse("core:delete-todo-list", kwargs={"pk": 1}) == "/app/lists/delete/1/"
-    assert resolve("/app/lists/delete/1/").view_name == "core:delete-todo-list"
+    pub_id = uuid.uuid4()
+    assert (
+        reverse("core:delete-todo-list", kwargs={"pub_id": str(pub_id)})
+        == f"/app/lists/delete/{pub_id}/"
+    )
+    assert resolve(f"/app/lists/delete/{pub_id}/").view_name == "core:delete-todo-list"
 
 
 def test_create_list():

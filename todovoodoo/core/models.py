@@ -1,5 +1,6 @@
 import datetime
 import json
+import uuid
 from calendar import day_name
 
 from dateutil.relativedelta import relativedelta
@@ -19,6 +20,8 @@ class ListItem(TimeStampedModel):
     todo_list = models.ForeignKey("TodoList", on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     due_date = models.DateField()
+
+    pub_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
     def postpone(self, days: int = 0):
         self.due_date = localdate(now()) + relativedelta(days=days)
@@ -59,6 +62,8 @@ class TodoList(TimeStampedModel):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.TextField()
+
+    pub_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
     class Meta:
         unique_together = ("owner", "name")

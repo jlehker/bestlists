@@ -14,9 +14,9 @@ class TodoListView(LoginRequiredMixin, TemplateView):
 
     template_name = "core/todo_list.html"
 
-    def get_context_data(self, pk=None, **kwargs):
+    def get_context_data(self, pub_id=None, **kwargs):
         """Use this to add extra context."""
-        todo_lookup_args = {"pk": pk} if pk is not None else {"name": "main"}
+        todo_lookup_args = {"pub_id": pub_id} if pub_id is not None else {"name": "main"}
         try:
             todo_list = TodoList.objects.get(owner=self.request.user, **todo_lookup_args)
         except TodoList.DoesNotExist:
@@ -45,7 +45,7 @@ class ListItemCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         try:
-            todo_list = TodoList.objects.get(owner=self.request.user, pk=self.kwargs["pk"])
+            todo_list = TodoList.objects.get(owner=self.request.user, pub_id=self.kwargs["pub_id"])
         except TodoList.DoesNotExist:
             return redirect(reverse("core:lists-view"))
         form.instance.todo_list = todo_list
@@ -62,6 +62,8 @@ list_item_create_view = ListItemCreate.as_view()
 
 class ListItemDelete(LoginRequiredMixin, DeleteView):
 
+    slug_url_kwarg = "pub_id"
+    slug_field = "pub_id"
     success_url = reverse_lazy("core:lists-view")
 
     def get_queryset(self):
@@ -76,6 +78,8 @@ list_item_delete_view = ListItemDelete.as_view()
 
 class ListItemUpdate(LoginRequiredMixin, UpdateView):
 
+    slug_url_kwarg = "pub_id"
+    slug_field = "pub_id"
     success_url = reverse_lazy("core:lists-view")
     fields = ["description"]
 
@@ -118,8 +122,10 @@ todo_list_create_view = TodoListCreate.as_view()
 
 class TodoListUpdate(LoginRequiredMixin, UpdateView):
 
+    slug_url_kwarg = "pub_id"
+    slug_field = "pub_id"
+    form_class = TodoListForm
     success_url = reverse_lazy("core:lists-view")
-    fields = ["name", "frequency", "interval", "weekdays"]
 
     def get_queryset(self):
         return TodoList.objects.filter(owner=self.request.user)
@@ -134,6 +140,8 @@ todo_list_update_view = TodoListUpdate.as_view()
 class TodoListDelete(LoginRequiredMixin, DeleteView):
     """ Deletes a list. """
 
+    slug_url_kwarg = "pub_id"
+    slug_field = "pub_id"
     success_url = reverse_lazy("core:lists-view")
 
     def get_queryset(self):

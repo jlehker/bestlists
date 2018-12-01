@@ -9,7 +9,7 @@
             <ul class="nav nav-tabs card-header-tabs">
                 {% for todo_list in todo_lists %}
                     <li class="nav-item">
-                        <a class="nav-link {% if todo_list.pk == active_list.pk %}active{% endif %}" href="{% url 'core:lists-view' todo_list.pk %}">{{ todo_list.name.capitalize }}</a>
+                        <a class="nav-link {% if todo_list.pub_id == active_list.pub_id %}active{% endif %}" href="{% url 'core:lists-view' todo_list.pub_id %}">{{ todo_list.name.capitalize }}</a>
                     </li>
                 {% endfor %}
                 <li class="nav-item">
@@ -22,7 +22,7 @@
 
         <div class="card-body">
                 <form class="form-horizontal float-right" method="post"
-                      action="{% url 'core:delete-todo-list' active_list.pk %}">
+                      action="{% url 'core:delete-todo-list' active_list.pub_id %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <div class="btn-group btn-group-sm" role="group">
@@ -31,7 +31,7 @@
                                 data-toggle="modal"
                                 data-target="#editListModal"
 {#                                data-todo-list='{{ active_list.as_json|safe }}'#}
-                                data-list-update-url='{% url 'core:update-todo-list' active_list.pk %}'
+                                data-list-update-url='{% url 'core:update-todo-list' active_list.pub_id %}'
                                 {% if not can_delete %}disabled{% endif %}><span class="fa fa-edit fa-xs"></span></button>
                         <button type="submit"
                                 class="btn btn-outline-danger"
@@ -42,7 +42,7 @@
                     </div>
                 </form>
                 <br/>
-            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pk %}">
+            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
                 {{ list_item_form|crispy }}
@@ -58,11 +58,11 @@
                     <li class="list-group-item list-group-item-action py-2">
                         <div class="btn-toolbar justify-content-between" role="toolbar">
                             <span class="font-weight-bold">{{ todo.description }}</span>
-                            <form class="form-inline" method="post" action="{% url 'core:delete-item' todo.pk %}">
+                            <form class="form-inline" method="post" action="{% url 'core:delete-item' todo.pub_id %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-item-description="{{ todo.description }}" data-item-update-url="{% url 'core:update-item' todo.pk %}" data-target="#editItemModal">
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-item-description="{{ todo.description }}" data-item-update-url="{% url 'core:update-item' todo.pub_id %}" data-target="#editItemModal">
                                         <span class="fa fa-pencil fa-xs"></span> Edit
                                     </button>
                                     <button type="submit" class="btn btn-outline-danger">

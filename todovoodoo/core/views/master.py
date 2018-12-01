@@ -32,7 +32,7 @@ class ListItemPostpone(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         redirect_url = request.POST.get("next", reverse("core:master-list"))
         try:
-            list_item = ListItem.objects.get(pk=self.kwargs["pk"])
+            list_item = ListItem.objects.get(pub_id=self.kwargs["pub_id"])
             list_item.postpone(int(request.POST.get("days", 0)))
         except (ListItem.DoesNotExist, ValueError):
             messages.add_message(request, messages.ERROR, "Couldn't postpone item.")
@@ -53,7 +53,7 @@ class ListItemComplete(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         redirect_url = request.POST.get("next", reverse("core:master-list"))
         try:
-            list_item = ListItem.objects.get(pk=self.kwargs["pk"])
+            list_item = ListItem.objects.get(pub_id=self.kwargs["pub_id"])
             list_item.mark_complete()
         except (ListItem.DoesNotExist, ValueError):
             messages.add_message(request, messages.ERROR, "Couldn't mark item complete.")
