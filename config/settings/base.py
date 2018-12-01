@@ -66,6 +66,7 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_framework",
+    "easy_timezones",
 ]
 LOCAL_APPS = [
     "todovoodoo.users.apps.UsersAppConfig",
@@ -124,6 +125,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "easy_timezones.middleware.EasyTimezoneMiddleware",
 ]
 
 # STATIC
