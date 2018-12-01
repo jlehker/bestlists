@@ -221,3 +221,5 @@ SOCIALACCOUNT_ADAPTER = "todovoodoo.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+GEOIP_DATABASE = ROOT_DIR.path("config", "geoip", "GeoLiteCity.dat")
+GEOIPV6_DATABASE = ROOT_DIR.path("config", "geoip", "GeoIPv6.dat")
