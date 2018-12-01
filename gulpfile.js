@@ -37,7 +37,7 @@ var pathsConfig = function (appName) {
       vendorsRoot + 'jquery/dist/jquery.slim.js',
       vendorsRoot + 'popper.js/dist/umd/popper.js',
       vendorsRoot + 'bootstrap/dist/js/bootstrap.js',
-      vendorsRoot + 'vue/dist/vue.common.js'
+      vendorsRoot + 'vue/dist/vue.min.js'
     ],
     
     app: this.app,
