@@ -36,6 +36,7 @@ var pathsConfig = function (appName) {
     vendorsJs: [
       vendorsRoot + 'jquery/dist/jquery.slim.js',
       vendorsRoot + 'popper.js/dist/umd/popper.js',
+      vendorsRoot + 'vue/dist/vue.common.js',
       vendorsRoot + 'bootstrap/dist/js/bootstrap.js'
     ],
     
@@ -134,4 +135,7 @@ gulp.task('watch', function() {
 // Default task
 gulp.task('default', function() {
     runSequence(['styles', 'scripts', 'vendor-scripts', 'imgCompression'], ['runServer', 'browserSync', 'watch']);
+});
+gulp.task('build', function() {
+    runSequence(['styles', 'scripts', 'vendor-scripts', 'imgCompression']);
 });
