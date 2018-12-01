@@ -20,7 +20,7 @@ class MasterListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return ListItem.objects.filter(
             todo_list__owner=self.request.user, due_date__lte=localdate(now())
-        )
+        ).order_by("due_date")
 
 
 master_list_view = MasterListView.as_view()

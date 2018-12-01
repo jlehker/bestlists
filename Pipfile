@@ -52,6 +52,7 @@ coverage = "*"
 pytest-django = "*"
 pytest = "*"
 django-extensions = "*"
+django-test-plus = "*"
 
 [requires]
 python_version = "3.7.1"
