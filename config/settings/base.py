@@ -6,7 +6,7 @@ import environ
 
 ROOT_DIR = environ.Path(__file__) - 3  # (todovoodoo/config/settings/base.py - 3 = todovoodoo/)
 APPS_DIR = ROOT_DIR.path("todovoodoo")
-WEB_DIR = ROOT_DIR.path("web")
+WEB_DIR = ROOT_DIR
 
 
 env = environ.Env()
