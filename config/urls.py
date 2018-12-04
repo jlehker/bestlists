@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name="core:lists-view")),
@@ -13,7 +13,8 @@ urlpatterns = [
     path("users/", include("todovoodoo.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("app/", include("todovoodoo.core.urls", namespace="core")),
+    path("v0/", include("todovoodoo.core.urls", namespace="core")),
+    re_path(r"^web", TemplateView.as_view(template_name="index.html"), name="web"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
