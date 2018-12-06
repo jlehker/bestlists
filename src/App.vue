@@ -97,18 +97,22 @@ export default {
   data: () => ({
       drawer: null,
       items: [
-        { icon: 'lightbulb_outline', text: 'Master List' },
+        { icon: 'list', text: 'Master List' },
         { icon: 'touch_app', text: 'Configure/Create Lists' },
+        { icon: 'done', text: 'Completed Today' },
         { divider: true },
-        { heading: 'Labels' },
-        { icon: 'add', text: 'Create new label' },
+        { heading: 'Favorite Lists' },
+        { icon: 'add', text: 'Add Favorite' },
         { divider: true },
-        { icon: 'archive', text: 'Archive' },
-        { icon: 'delete', text: 'Trash' },
+        { heading: 'Shared Lists' },
+        { icon: 'add', text: 'Create Shared List' },
         { divider: true },
         { icon: 'settings', text: 'Settings' },
-        { icon: 'chat_bubble', text: 'Trash' },
         { icon: 'help', text: 'Help' },
+        { divider: true },
+        { icon: 'rotate_left', text: 'Use Legacy GUI' },
+        { divider: true },
+        { icon: 'lock_open', text: 'Log Out' },
       ]
     }),
     props: {
