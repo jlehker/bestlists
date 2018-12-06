@@ -63,23 +63,8 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-content>
-        <v-container fluid fill-height class="grey lighten-4">
-          <v-layout justify-center align-center>
-            <v-flex shrink>
-              <v-tooltip right>
-                <v-btn
-                  icon
-                  large
-                  :href="source"
-                  target="_blank"
-                  slot="activator"
-                >
-                  <v-icon large>code</v-icon>
-                </v-btn>
-                <span>Source</span>
-              </v-tooltip>
-            </v-flex>
-          </v-layout>
+        <v-container fluid class="grey lighten-4">
+          <MasterList />
         </v-container>
       </v-content>
     </v-app>
@@ -87,12 +72,12 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import MasterList from './components/MasterList';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    MasterList,
   },
   data: () => ({
       drawer: null,
