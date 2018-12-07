@@ -14,6 +14,8 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     path("v0/", include("todovoodoo.core.urls", namespace="core")),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    path("api/", include("todovoodoo.api.urls", namespace="todovoodoo.api")),
     re_path(r"^web", TemplateView.as_view(template_name="index.html"), name="web"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

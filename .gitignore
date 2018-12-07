@@ -256,3 +256,5 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+staticfiles/
