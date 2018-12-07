@@ -24,6 +24,7 @@ gunicorn = {extras = ["gevent"],version = "*"}
 pytz = "*"
 django-easy-timezones = "*"
 whitenoise = {extras = ["brotli"],version = "*"}
+django-rest-swagger = "*"
 
 [dev-packages]
 python-slugify = "==1.2.6"
