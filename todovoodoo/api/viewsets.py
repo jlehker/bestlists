@@ -1,14 +1,19 @@
-from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, filters
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import TodoListSerializer, ListItemSerializer
 from todovoodoo.core.models import ListItem
+
+from .serializers import TodoListSerializer, ListItemSerializer
 
 
 class ViewSetBase(viewsets.ModelViewSet):
+    """ Base viewset for user APIs """
+
     authentication_classes = (SessionAuthentication, TokenAuthentication)
-    permission_classes = [IsAuthenticated]
+    permission_classes = (IsAuthenticated,)
+    filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend)
     lookup_field = "pub_id"
 
 

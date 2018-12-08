@@ -25,6 +25,7 @@ pytz = "*"
 django-easy-timezones = "*"
 whitenoise = {extras = ["brotli"],version = "*"}
 django-rest-swagger = "*"
+django-filter = "*"
 
 [dev-packages]
 python-slugify = "==1.2.6"
