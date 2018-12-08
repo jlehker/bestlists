@@ -6,9 +6,10 @@
     "serve": "vue-cli-service serve --fix",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "postinstall": "vue-cli-service build"
+    "postinstall": "NODE_ENV=production vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
@@ -34,5 +35,15 @@
   "engines": {
     "node": "11.3.0",
     "npm": "6.4.1"
-  }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
