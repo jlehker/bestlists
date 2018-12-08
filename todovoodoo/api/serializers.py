@@ -6,7 +6,7 @@ from todovoodoo.core.models import TodoList, ListItem
 class TodoListSerializer(serializers.ModelSerializer):
     class Meta:
         model = TodoList
-        fields = ("name", "frequency", "owner", "pub_id")
+        fields = ("name", "frequency", "pub_id")
 
 
 class ListItemSerializer(serializers.ModelSerializer):
