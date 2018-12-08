@@ -2,48 +2,32 @@
   <v-list two-line subheader>
     <v-subheader inset>Master List</v-subheader>
     <v-divider inset></v-divider>
-
-    <v-list-tile
-      v-for="item in items"
-      :key="item.pub_id"
+    <ListItem
+      v-for="(item, index) in items"
+      v-bind:item="item"
+      v-bind:index="index"
+      v-bind:key="item.id"
       avatar
-      @click=""
-    >
-      <v-list-tile-avatar>
-        <v-icon class="blue lighten-1">label_important</v-icon>
-        <!--<v-icon :class="[item.iconClass]">label_important</v-icon>-->
-      </v-list-tile-avatar>
-
-      <v-list-tile-content>
-        <v-list-tile-title>{{ item.description }}</v-list-tile-title>
-        <v-list-tile-sub-title>{{ item.due_date }}</v-list-tile-sub-title>
-      </v-list-tile-content>
-
-      <v-list-tile-action>
-        <v-btn icon ripple>
-          <v-icon color="yellow darken-3">watch_later</v-icon>
-        </v-btn>
-      </v-list-tile-action>
-      <v-list-tile-action>
-        <v-btn icon ripple>
-          <v-icon color="blue lighten-1">check_circle</v-icon>
-        </v-btn>
-      </v-list-tile-action>
-    </v-list-tile>
+    ></ListItem>
   </v-list>
 </template>
+
 <script>
 import axios from 'axios';
+import ListItem from './ListItem';
 
 export default {
+  components: {
+    ListItem,
+  },
   data() {
     return {
       items: [{'description': 'ni', 'pub_id': 'nno', "due_date": 'caca'}],
     }
   },
- mounted(){
+  beforeMount() {
     this.getMasterList();
- },
+  },
   methods: {
     getMasterList: function () {
       axios.get("/api/lists")
