@@ -22,20 +22,20 @@ export default {
   },
   data() {
     return {
-      items: [{'description': 'ni', 'pub_id': 'nno', "due_date": 'caca'}],
-    }
+      items: [{ description: 'ni', pub_id: 'nno', due_date: 'caca' }],
+    };
   },
   beforeMount() {
     this.getMasterList();
   },
   methods: {
-    getMasterList: function () {
-      axios.get("/api/lists")
+    getMasterList() {
+      axios.get('/api/lists')
         .then((response) => {
           this.items = response.data;
-        })
-    }
-  }
+        });
+    },
+  },
 };
 </script>
 

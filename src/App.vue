@@ -37,7 +37,6 @@
             <v-list-tile
               :key="i"
               v-else
-              @click=""
             >
               <v-list-tile-action>
                 <v-icon>{{ item.icon }}</v-icon>
@@ -80,29 +79,29 @@ export default {
     MasterList,
   },
   data: () => ({
-      drawer: null,
-      items: [
-        { icon: 'list', text: 'Master List' },
-        { icon: 'touch_app', text: 'Configure/Create Lists' },
-        { icon: 'done', text: 'Completed Today' },
-        { divider: true },
-        { heading: 'Favorite Lists' },
-        { icon: 'add', text: 'Add Favorite' },
-        { divider: true },
-        { heading: 'Shared Lists' },
-        { icon: 'add', text: 'Create Shared List' },
-        { divider: true },
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'help', text: 'Help' },
-        { divider: true },
-        { icon: 'rotate_left', text: 'Use Legacy GUI' },
-        { divider: true },
-        { icon: 'lock_open', text: 'Log Out' },
-      ]
-    }),
-    props: {
-      source: String
-    }
+    drawer: null,
+    items: [
+      { icon: 'list', text: 'Master List' },
+      { icon: 'touch_app', text: 'Configure/Create Lists' },
+      { icon: 'done', text: 'Completed Today' },
+      { divider: true },
+      { heading: 'Favorite Lists' },
+      { icon: 'add', text: 'Add Favorite' },
+      { divider: true },
+      { heading: 'Shared Lists' },
+      { icon: 'add', text: 'Create Shared List' },
+      { divider: true },
+      { icon: 'settings', text: 'Settings' },
+      { icon: 'help', text: 'Help' },
+      { divider: true },
+      { icon: 'rotate_left', text: 'Use Legacy GUI' },
+      { divider: true },
+      { icon: 'lock_open', text: 'Log Out' },
+    ],
+  }),
+  props: {
+    source: String,
+  },
 };
 </script>
 

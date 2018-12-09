@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import HelloWorld from '../components/MasterList'
+import HelloWorld from '../components/MasterList';
 
 export default {
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+  },
 };
 </script>
