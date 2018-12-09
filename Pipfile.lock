@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6bcda65b0ee882cfede09e7784ce2687915acbb1c708363dc196410239c5f73f"
+            "sha256": "cc8ad7a027dc5123193a35c37624b6ebe3ead0501009ab0118ea8cac43b063e7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -176,7 +176,7 @@
         },
         "django-anymail": {
             "extras": [
-                "mailgun"
+                "sendgrid"
             ],
             "hashes": [
                 "sha256:845edd136d9945972c507fa4d975286904bf5cb9da137925a0e44fd93caed875",
