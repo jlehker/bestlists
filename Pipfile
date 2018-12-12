@@ -26,6 +26,7 @@ whitenoise = {extras = ["brotli"],version = "*"}
 django-rest-swagger = "*"
 django-filter = "*"
 django-anymail = {extras = ["sendgrid"],version = "*"}
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 python-slugify = "==1.2.6"

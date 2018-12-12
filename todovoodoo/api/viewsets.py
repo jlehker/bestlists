@@ -11,7 +11,6 @@ from .serializers import TodoListSerializer, ListItemSerializer
 class ViewSetBase(viewsets.ModelViewSet):
     """ Base viewset for user APIs """
 
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
     permission_classes = (IsAuthenticated,)
     filter_backends = (filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend)
     lookup_field = "pub_id"

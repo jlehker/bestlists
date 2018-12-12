@@ -231,10 +231,10 @@ SOCIALACCOUNT_ADAPTER = "todovoodoo.users.adapters.SocialAccountAdapter"
 GEOIP_DATABASE = ROOT_DIR.path("config", "geoip", "GeoLiteCity.dat")
 GEOIPV6_DATABASE = ROOT_DIR.path("config", "geoip", "GeoIPv6.dat")
 
-WEBPACK_LOADER = {
-    "DEFAULT": {
-        "CACHE": DEBUG,
-        "BUNDLE_DIR_NAME": "/bundles/",  # must end with slash
-        "STATS_FILE": WEB_DIR.path("webpack-stats.json"),
-    }
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    )
 }
+
+APPEND_SLASH = True
