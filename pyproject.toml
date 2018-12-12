@@ -10,6 +10,5 @@ exclude = '''
   | _build
   | build
   | dist
-  | todovoodoo/core/migrations/
 )/
 '''

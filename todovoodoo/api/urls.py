@@ -1,6 +1,5 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework import routers
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_swagger.views import get_swagger_view
 
 from .viewsets import TodoListViewSet, ListItemViewSet
@@ -15,6 +14,6 @@ router.register(r"items", TodoListViewSet, basename="ListItem")
 
 urlpatterns = [
     path("", schema_view),
-    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("rest-auth/", include("rest_auth.urls")),
+    path("rest-auth/registration/", include("rest_auth.registration.urls")),
 ] + router.urls

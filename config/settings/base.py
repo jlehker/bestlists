@@ -69,7 +69,10 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_framework",
+    "rest_framework.authtoken",
     "rest_framework_swagger",
+    "rest_auth",
+    "rest_auth.registration",
     "easy_timezones",
 ]
 LOCAL_APPS = [
@@ -231,16 +234,5 @@ SOCIALACCOUNT_ADAPTER = "todovoodoo.users.adapters.SocialAccountAdapter"
 GEOIP_DATABASE = ROOT_DIR.path("config", "geoip", "GeoLiteCity.dat")
 GEOIPV6_DATABASE = ROOT_DIR.path("config", "geoip", "GeoIPv6.dat")
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
-}
 
 APPEND_SLASH = True
-
-SWAGGER_SETTING = {
-    "SECURITY_DEFINITIONS": {
-        "api_key": {"type": "apiKey", "in": "header", "name": "Authorization"}
-    }
-}
