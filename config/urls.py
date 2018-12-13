@@ -6,7 +6,7 @@ from django.views import defaults as default_views
 from django.views.generic import RedirectView, TemplateView
 
 urlpatterns = [
-    path("", RedirectView.as_view(pattern_name="core:lists-view")),
+    path("", RedirectView.as_view(url="/web/")),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
