@@ -67,15 +67,18 @@
         </v-container>
       </v-content>
     </v-app>
+    <Login ref="login"/>
   </div>
 </template>
 
 <script>
 import MasterList from './components/MasterList';
+import Login from './components/Login';
 
 export default {
   name: 'App',
   components: {
+    Login,
     MasterList,
   },
   data: () => ({
@@ -102,6 +105,9 @@ export default {
   props: {
     source: String,
   },
+  mounted() {
+    this.$refs.login.open();
+  }
 };
 </script>
 
