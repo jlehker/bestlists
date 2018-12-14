@@ -193,3 +193,4 @@ RAVEN_CONFIG = {"dsn": SENTRY_DSN}
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
