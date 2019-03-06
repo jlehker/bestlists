@@ -7,10 +7,9 @@ ENV PYTHONUNBUFFERED 1
 
 # -- Install system dependencies:
 RUN apt-get update && apt-get upgrade -y && apt-get install -yqq apt-transport-https curl
-RUN \
-  echo "deb https://deb.nodesource.com/node_10.x stretch main" > /etc/apt/sources.list.d/nodesource.list && \
-  curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
-  apt-get update && \
+RUN echo "deb https://deb.nodesource.com/node_10.x stretch main" > /etc/apt/sources.list.d/nodesource.list
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+RUN apt-get update && \
   apt-get install -yqq nodejs && \
   pip install -U pip && pip install pipenv && \
   rm -rf /var/lib/apt/lists/*
