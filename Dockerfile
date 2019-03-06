@@ -41,4 +41,4 @@ RUN chown -R django /app
 
 USER django
 
-ENTRYPOINT ["entrypoint"]
+ENTRYPOINT ["./entrypoint"]
