@@ -12,35 +12,33 @@ RUN apt-get update && apt-get upgrade -y && apt-get install curl -y
 RUN pip3 install --upgrade pip
 RUN pip3 install pipenv
 
+# -- Adding Pipfiles
+COPY Pipfile Pipfile
+COPY Pipfile.lock Pipfile.lock
+
+# -- Install dependencies:
+RUN set -ex && pipenv install --deploy --system
+
 # -- Create Django user:
 RUN addgroup --system django && adduser --system --ingroup django django
 
-# -- Install Application into container:
-COPY ./compose/production/django/entrypoint /entrypoint
-RUN sed -i 's/\r//' /entrypoint
-RUN chmod +x /entrypoint
-RUN chown django /entrypoint
-
-COPY ./compose/production/django/start /start
-RUN sed -i 's/\r//' /start
-RUN chmod +x /start
-RUN chown django /start
-
 RUN set -ex && mkdir /app
-
 COPY . /app
+WORKDIR /app
+
+# -- Install Application into container:
+COPY ./compose/production/django/entrypoint entrypoint
+RUN sed -i 's/\r//' entrypoint
+RUN chmod +x entrypoint
+RUN chown django entrypoint
+
+COPY ./compose/production/django/start start
+RUN sed -i 's/\r//' start
+RUN chmod +x start
+RUN chown django start
 
 RUN chown -R django /app
 
 USER django
 
-WORKDIR /app
-
-# -- Adding Pipfiles
-ONBUILD COPY Pipfile Pipfile
-ONBUILD COPY Pipfile.lock Pipfile.lock
-
-# -- Install dependencies:
-ONBUILD RUN set -ex && pipenv install --deploy --system
-
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["entrypoint"]

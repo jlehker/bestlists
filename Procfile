@@ -1,1 +1,1 @@
-web: compose/production/django/start
+web: start
