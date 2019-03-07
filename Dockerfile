@@ -6,7 +6,7 @@ ENV LANG C.UTF-8
 ENV PYTHONUNBUFFERED 1
 
 # -- Install system dependencies:
-RUN apt-get update && apt-get upgrade -y && apt-get install -yqq apt-transport-https curl gnupg2
+RUN apt-get update -yqq && apt-get upgrade -yqq && apt-get install -yqq apt-transport-https curl gnupg2
 RUN echo "deb https://deb.nodesource.com/node_10.x stretch main" > /etc/apt/sources.list.d/nodesource.list
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
 RUN apt-get update -qq && \
