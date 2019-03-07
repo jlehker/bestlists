@@ -41,8 +41,6 @@ WORKDIR /app
 USER django
 
 # -- Build frontend:
-ENV DJANGO_SETTINGS_MODULE config.settings.production
-RUN python /app/manage.py collectstatic --noinput
 RUN npm install
 RUN npm run build
 
