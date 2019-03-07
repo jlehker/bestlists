@@ -14,7 +14,7 @@ from urllib.parse import urlparse
 
 import psycopg2
 
-result = urlparse.urlparse("${DATABASE_URL}")
+result = urlparse("${DATABASE_URL}")
 
 try:
     psycopg2.connect(
