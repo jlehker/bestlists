@@ -32,11 +32,6 @@ RUN sed -i 's/\r//' entrypoint
 RUN chmod +x entrypoint
 RUN chown django entrypoint
 
-COPY ./compose/production/django/start start
-RUN sed -i 's/\r//' start
-RUN chmod +x start
-RUN chown django start
-
 # -- Create app directory:
 RUN set -ex && mkdir /app
 COPY . /app
@@ -46,6 +41,7 @@ WORKDIR /app
 USER django
 
 # -- Build frontend:
+RUN python /app/manage.py collectstatic --noinput
 RUN npm install
 RUN npm run build
 

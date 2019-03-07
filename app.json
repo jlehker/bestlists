@@ -1,17 +1,7 @@
 {
-  "buildpacks": [
-    {
-      "url": "heroku/python"
-    }
-  ],
-  "environments": {
-    "test": {
-      "scripts": {
-        "test": "pytest"
-      },
-      "addons": [
-        "heroku-postgresql:in-dyno"
-      ]
+  "scripts": {
+    "dokku": {
+      "predeploy": "/app/manage.py migrate --noinput"
     }
   }
 }
