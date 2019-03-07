@@ -10,16 +10,19 @@ export CELERY_BROKER_URL="${REDIS_URL}"
 postgres_ready() {
 python << END
 import sys
+from urllib.parse import urlparse
 
 import psycopg2
 
+result = urlparse.urlparse("${DATABASE_URL}")
+
 try:
     psycopg2.connect(
-        dbname="${POSTGRES_DB}",
-        user="${POSTGRES_USER}",
-        password="${POSTGRES_PASSWORD}",
-        host="${POSTGRES_HOST}",
-        port="${POSTGRES_PORT}",
+        dbname=result.path[1:],
+        user=result.username,
+        password=result.password,
+        host=result.hostname,
+        port=result.port,
     )
 except psycopg2.OperationalError:
     sys.exit(-1)
