@@ -41,12 +41,11 @@ RUN chown django start
 RUN set -ex && mkdir /app
 COPY . /app
 RUN chown -R django /app
-
-# -- Build frontend:
-RUN npm --prefix app run build
-
 WORKDIR /app
 
 USER django
+
+# -- Build frontend:
+RUN npm install && npm run build
 
 ENTRYPOINT ["/entrypoint"]
