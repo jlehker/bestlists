@@ -37,12 +37,15 @@ RUN sed -i 's/\r//' start
 RUN chmod +x start
 RUN chown django start
 
+# -- Create app directory:
 RUN set -ex && mkdir /app
 COPY . /app
+RUN chown -R django /app
 WORKDIR /app
 
-RUN chown -R django /app
-
 USER django
+
+# -- Build frontend:
+RUN npm run build
 
 ENTRYPOINT ["/entrypoint"]
