@@ -11,12 +11,12 @@ django-model-utils = "~=3.1"
 django-allauth = "~=0.38"
 django-crispy-forms = "~=1.7"
 django-redis = "~=4.10"
-djangorestframework = "~=3.9"
+djangorestframework = "*"
 coreapi = "~=2.3"
 django-storages = {version = "~=1.7",extras = ["boto3"]}
 Pillow = "~=5.3"
 "argon2_cffi" = "~=18.3"
-Django = "~=2.1"
+Django = "*"
 raven = "*"
 psycopg2-binary = "*"
 gunicorn = {extras = ["gevent"],version = "*"}
@@ -59,4 +59,4 @@ django-test-plus = "*"
 pylint = "*"
 
 [requires]
-python_version = "3.7.1"
+python_version = "3.7.2"
