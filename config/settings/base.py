@@ -6,7 +6,6 @@ import environ
 
 ROOT_DIR = environ.Path(__file__) - 3  # (todovoodoo/config/settings/base.py - 3 = todovoodoo/)
 APPS_DIR = ROOT_DIR.path("todovoodoo")
-WEB_DIR = ROOT_DIR
 
 
 env = environ.Env()
@@ -145,7 +144,7 @@ STATIC_ROOT = str(ROOT_DIR("staticfiles"))
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [str(APPS_DIR.path("static")), str(WEB_DIR.path("dist"))]
+STATICFILES_DIRS = [str(APPS_DIR.path("static"))]
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -167,7 +166,7 @@ TEMPLATES = [
         # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-        "DIRS": [str(APPS_DIR.path("templates")), str(WEB_DIR.path("dist"))],
+        "DIRS": [str(APPS_DIR.path("templates"))],
         "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
             "debug": DEBUG,

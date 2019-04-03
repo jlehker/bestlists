@@ -7,12 +7,7 @@ ENV PYTHONUNBUFFERED 1
 
 # -- Install system dependencies:
 RUN apt-get update -yqq && apt-get upgrade -yqq && apt-get install -yqq apt-transport-https curl gnupg2
-RUN echo "deb https://deb.nodesource.com/node_10.x stretch main" > /etc/apt/sources.list.d/nodesource.list
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
-RUN apt-get update -qq && \
-  apt-get install -yqq nodejs gnupg2 && \
-  pip -qq install -U pip && pip -qq install pipenv && \
-  rm -rf /var/lib/apt/lists/*
+RUN pip -qq install -U pip && pip -qq install pipenv
 
 # -- Adding Pipfiles and package.json
 COPY Pipfile Pipfile
@@ -21,7 +16,7 @@ COPY package.json package.json
 COPY package-lock.json package-lock.json
 
 # -- Install project dependencies:
-RUN set -ex && pipenv install --deploy --system && npm i -g npm@^6
+RUN set -ex && pipenv install --deploy --system
 
 # -- Create Django user:
 RUN addgroup --system django && adduser --system --ingroup django django
@@ -39,9 +34,5 @@ RUN chown -R django /app
 WORKDIR /app
 
 USER django
-
-# -- Build frontend:
-RUN npm install
-RUN npm run build
 
 ENTRYPOINT ["/entrypoint"]

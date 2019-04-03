@@ -6,16 +6,15 @@ from django.views import defaults as default_views
 from django.views.generic import RedirectView, TemplateView
 
 urlpatterns = [
-    path("", RedirectView.as_view(url="/web/")),
+    path("", RedirectView.as_view(pattern_name="core:lists-view")),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("todovoodoo.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-    path("v0/", include("todovoodoo.core.urls", namespace="core")),
+    path("app/", include("todovoodoo.core.urls", namespace="core")),
     path("api/v1/", include("todovoodoo.api.urls", namespace="todovoodoo.api")),
-    re_path(r"^web", TemplateView.as_view(template_name="index.html"), name="web"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
