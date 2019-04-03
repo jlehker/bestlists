@@ -12,8 +12,6 @@ RUN pip -qq install -U pip && pip -qq install pipenv
 # -- Adding Pipfiles and package.json
 COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
-COPY package.json package.json
-COPY package-lock.json package-lock.json
 
 # -- Install project dependencies:
 RUN set -ex && pipenv install --deploy --system
