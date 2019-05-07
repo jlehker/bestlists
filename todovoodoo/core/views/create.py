@@ -28,7 +28,8 @@ class TodoListView(LoginRequiredMixin, TemplateView):
         context["list_items"] = todo_list.listitem_set.order_by("-created")
         context["active_list"] = todo_list
         context["can_delete"] = True if todo_list.name != "main" else False
-        context["list_item_form"] = ListItemForm()
+        context["list_item_edit_form"] = ListItemForm(prefix="list_item_edit")
+        context["list_item_create_form"] = ListItemForm(prefix="list_item_create")
         context["todo_list_form"] = TodoListForm(
             initial={"frequency": TodoList.FREQUENCY.weekly, "interval": 1}
         )
@@ -41,6 +42,7 @@ todo_list_view = TodoListView.as_view()
 class ListItemCreate(LoginRequiredMixin, CreateView):
 
     form_class = ListItemForm
+    prefix = "list_item_create"
     model = ListItem
 
     def form_valid(self, form):
@@ -80,8 +82,9 @@ class ListItemUpdate(LoginRequiredMixin, UpdateView):
 
     slug_url_kwarg = "pub_id"
     slug_field = "pub_id"
+    prefix = "list_item_edit"
     success_url = reverse_lazy("core:lists-view")
-    fields = ["description"]
+    fields = ["description", "always_show"]
 
     def get_queryset(self):
         return ListItem.objects.filter(todo_list__owner=self.request.user)

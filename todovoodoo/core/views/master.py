@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.timezone import now, localdate
@@ -19,7 +20,8 @@ class MasterListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return ListItem.objects.filter(
-            todo_list__owner=self.request.user, due_date__lte=localdate(now())
+            Q(todo_list__owner=self.request.user)
+            & Q(Q(due_date__lte=localdate(now())) | Q(always_show=True))
         ).order_by("due_date")
 
 
@@ -33,7 +35,12 @@ class ListItemPostpone(LoginRequiredMixin, View):
         redirect_url = request.POST.get("next", reverse("core:master-list"))
         try:
             list_item = ListItem.objects.get(pub_id=self.kwargs["pub_id"])
-            list_item.postpone(int(request.POST.get("days", 0)))
+            if list_item.always_show:
+                messages.add_message(
+                    request, messages.WARNING, "Item marked to always show in master."
+                )
+            else:
+                list_item.postpone(int(request.POST.get("days", 0)))
         except (ListItem.DoesNotExist, ValueError):
             messages.add_message(request, messages.ERROR, "Couldn't postpone item.")
         else:
@@ -55,6 +62,12 @@ class ListItemComplete(LoginRequiredMixin, View):
         try:
             list_item = ListItem.objects.get(pub_id=self.kwargs["pub_id"])
             list_item.mark_complete()
+            if list_item.always_show:
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    'Marking an item as complete will clear "Always show in master" property.',
+                )
         except (ListItem.DoesNotExist, ValueError):
             messages.add_message(request, messages.ERROR, "Couldn't mark item complete.")
         else:

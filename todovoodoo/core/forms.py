@@ -5,6 +5,12 @@ from todovoodoo.core.models import ListItem, TodoList
 
 class ListItemForm(forms.ModelForm):
     description = forms.CharField(label="Description", max_length=100)
+    always_show = forms.BooleanField(
+        label="Always show in master list",
+        required=False,
+        initial=False,
+        widget=forms.CheckboxInput,
+    )
 
     def __init__(self, *args, **kwargs):
         super(ListItemForm, self).__init__(*args, **kwargs)
@@ -12,7 +18,7 @@ class ListItemForm(forms.ModelForm):
 
     class Meta:
         model = ListItem
-        fields = ("description",)
+        fields = ("description", "always_show")
 
 
 class TodoListForm(forms.ModelForm):

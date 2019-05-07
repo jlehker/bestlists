@@ -13,7 +13,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
                 <div class="modal-body">
-                        {{ list_item_form|crispy }}
+                        {{ list_item_edit_form|crispy }}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><span

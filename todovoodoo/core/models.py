@@ -20,6 +20,7 @@ class ListItem(TimeStampedModel):
     todo_list = models.ForeignKey("TodoList", on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     due_date = models.DateField()
+    always_show = models.BooleanField(default=False)
 
     pub_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
@@ -29,7 +30,8 @@ class ListItem(TimeStampedModel):
 
     def mark_complete(self):
         self.due_date = self._next_due_date
-        self.save(update_fields=["due_date"])
+        self.always_show = False
+        self.save(update_fields=["due_date", "always_show"])
 
     @property
     def _next_due_date(self) -> datetime.date:

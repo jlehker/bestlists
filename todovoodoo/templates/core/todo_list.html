@@ -45,7 +45,7 @@
             <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
-                {{ list_item_form|crispy }}
+                {{ list_item_create_form|crispy }}
                 <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn btn-primary">Create</button>
@@ -62,7 +62,7 @@
                                 {% csrf_token %}
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-item-description="{{ todo.description }}" data-item-update-url="{% url 'core:update-item' todo.pub_id %}" data-target="#editItemModal">
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-item-always-show="{{ todo.always_show }}" data-item-description="{{ todo.description }}" data-item-update-url="{% url 'core:update-item' todo.pub_id %}" data-target="#editItemModal">
                                         <span class="fa fa-pencil fa-xs"></span> Edit
                                     </button>
                                     <button type="submit" class="btn btn-outline-danger">
