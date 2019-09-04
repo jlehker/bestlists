@@ -1,3 +1,4 @@
+from decimal import Decimal
 import datetime
 import json
 import uuid
@@ -103,6 +104,7 @@ class Station(TimeStampedModel):
         blank=True,
         help_text="Description of what to include in a report entry. (e.g. 'take a picture of the towels')'",
     )
+    refund_value = models.DecimalField(max_digits=9, decimal_places=2, default=Decimal("0"))
 
 
 class ReportEntry(TimeStampedModel):
