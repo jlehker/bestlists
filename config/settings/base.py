@@ -73,6 +73,7 @@ THIRD_PARTY_APPS = [
     "rest_auth",
     "rest_auth.registration",
     "easy_timezones",
+    "phonenumber_field",
 ]
 LOCAL_APPS = [
     "todovoodoo.users.apps.UsersAppConfig",

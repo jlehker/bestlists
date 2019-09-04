@@ -27,6 +27,8 @@ django-filter = "*"
 django-anymail = {extras = ["sendgrid"],version = "*"}
 django-rest-auth = "*"
 pytz = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
 
 [dev-packages]
 python-slugify = "*"

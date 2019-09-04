@@ -10,8 +10,9 @@ from django.db import models
 from django.forms import model_to_dict
 from django.utils.timezone import localdate, now
 from model_utils import Choices
-
 from model_utils.models import TimeStampedModel
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 from todovoodoo.users.models import User
 
@@ -76,3 +77,23 @@ class TodoList(TimeStampedModel):
     @property
     def as_json(self) -> str:
         return json.dumps(model_to_dict(self))
+
+# -------- 
+
+class Station(TimeStampedModel):
+    """
+    Stations like "towel rack" or "dish washing station" that are defined by the administrator.
+    """
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    pub_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False, help_text="Publicly viewable station identifier.")
+    name = models.TextField(blank=False, default="New Station", help_text="Name of the station. (e.g.'Towel Station', 'Bathroom')")
+    description = models.TextField(blank=True, help_text="Description of what to include in a report entry. (e.g. 'take a picture of the towels')'")
+
+class ReportEntry(TimeStampedModel):
+    """
+    A guest user report entry.
+    """
+    station = models.ForeignKey("Station", on_delete=models.CASCADE)
+    description = models.TextField(blank=True, help_text="Description of the state of the current state of the station.")
+    photo_upload = models.FileField(null=True, help_text="Photo taken of the station.")
+    phone_number = PhoneNumberField(blank=True, help_text="Reporter's phone number.")
