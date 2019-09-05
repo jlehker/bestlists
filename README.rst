@@ -71,8 +71,7 @@ Moved to `Live reloading and SASS compilation`_.
 Deployment
 ----------
 
-The following details how to deploy this application.
-
+Deployed using dokku. git push dokku master
 
 Heroku
 ^^^^^^
