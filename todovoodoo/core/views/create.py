@@ -6,8 +6,8 @@ from django.urls import reverse_lazy, reverse
 from django.utils.timezone import now, localdate
 from django.views.generic import DeleteView, CreateView, TemplateView, UpdateView
 
-from todovoodoo.core.forms import ListItemForm, TodoListForm
-from todovoodoo.core.models import ListItem, TodoList
+from todovoodoo.core.forms import ListItemForm, TodoListForm, StationForm, StationItemForm
+from todovoodoo.core.models import ListItem, TodoList, Station, StationItem
 
 
 class TodoListView(LoginRequiredMixin, TemplateView):
@@ -30,9 +30,7 @@ class TodoListView(LoginRequiredMixin, TemplateView):
         context["can_delete"] = True if todo_list.name != "main" else False
         context["list_item_edit_form"] = ListItemForm(prefix="list_item_edit")
         context["list_item_create_form"] = ListItemForm(prefix="list_item_create")
-        context["todo_list_form"] = TodoListForm(
-            initial={"frequency": TodoList.FREQUENCY.weekly, "interval": 1}
-        )
+        context["todo_list_form"] = StationForm()
         return context
 
 
@@ -99,8 +97,8 @@ list_item_update_view = ListItemUpdate.as_view()
 class TodoListCreate(LoginRequiredMixin, CreateView):
     """ Creates a new list for items. """
 
-    form_class = TodoListForm
-    model = TodoList
+    form_class = StationForm
+    model = Station
     success_url = reverse_lazy("core:lists-view")
 
     def post(self, request, *args, **kwargs):
