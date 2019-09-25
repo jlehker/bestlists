@@ -7,22 +7,19 @@ from django.utils.timezone import now, localdate
 from django.views import View
 from django.views.generic import ListView
 
-from todovoodoo.core.models import ListItem
+from todovoodoo.core.models import Station, ListItem
 
 
 class MasterListView(LoginRequiredMixin, ListView):
-    """ Master view that includes all non-completed todos. """
+    """ Master view that includes all stations QR codes. """
 
-    model = ListItem
+    model = Station
     template_name = "core/master_list.html"
     context_object_name = "master_list"
     paginate_by = 10
 
     def get_queryset(self):
-        return ListItem.objects.filter(
-            Q(todo_list__owner=self.request.user)
-            & Q(Q(due_date__lte=localdate(now())) | Q(always_show=True))
-        ).order_by("due_date")
+        return Station.objects.filter(Q(owner=self.request.user))
 
 
 master_list_view = MasterListView.as_view()

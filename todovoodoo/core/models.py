@@ -106,6 +106,22 @@ class Station(TimeStampedModel):
     )
     refund_value = models.DecimalField(max_digits=9, decimal_places=2, default=Decimal("0"))
 
+    class Meta:
+        unique_together = ("owner", "name")
+
+
+class StationItem(TimeStampedModel):
+    """
+    Individual item descriptions for a station.
+    """
+
+    station = models.ForeignKey("Station", on_delete=models.CASCADE)
+    pub_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+    description = models.TextField(
+        blank=True,
+        help_text="Description of what to include in a report entry. (e.g. 'take a picture of the towels')'",
+    )
+
 
 class ReportEntry(TimeStampedModel):
     """

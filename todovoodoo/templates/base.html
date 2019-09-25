@@ -47,10 +47,10 @@
           <ul class="navbar-nav mr-auto">
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'core:lists-view' %}">{% trans "Create" %}</a>
+                    <a class="nav-link" href="{% url 'core:lists-view' %}">{% trans "Add/Edit Station Configuration" %}</a>
                 </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'core:master-list' %}">{% trans "Master List" %}</a>
+                <a class="nav-link" href="{% url 'core:master-list' %}">{% trans "View User Reports" %}</a>
               </li>
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}

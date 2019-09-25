@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load static i18n %}
-{% block title %}Master List{% endblock %}
+{% block title %}Guest Reports{% endblock %}
 
 {% block content %}
     <div class="card">
         <div class="card-header">
-            Master List
+            Guest Reports
         </div>
         <div class="card-body">
-            <h5 class="card-title">All your todos will show up here.</h5>
+            <h5 class="card-title">All guest reports are displayed here.</h5>
             <div class="list-group">
                 {% for todo in master_list %}
                     <li class="list-group-item list-group-item-action py-2">
