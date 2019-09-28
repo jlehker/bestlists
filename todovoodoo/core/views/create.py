@@ -31,6 +31,13 @@ class TodoListView(LoginRequiredMixin, TemplateView):
         context["list_item_edit_form"] = ListItemForm(prefix="list_item_edit")
         context["list_item_create_form"] = ListItemForm(prefix="list_item_create")
         context["todo_list_form"] = StationForm()
+        context.update(
+            {
+                "station_url": self.request.build_absolute_uri(
+                    reverse("core:lists-view", args=[todo_list.pub_id])
+                )
+            }
+        )
         return context
 
 

@@ -44,7 +44,7 @@
                 </form>
                 <br/>
             <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">
-                {% qr_from_text "Hello World!" size="T" image_format="png" error_correction="L" %}
+                {% qr_from_text station_url size="T" image_format="png" error_correction="L" %}
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
                 {{ list_item_create_form|crispy }}
