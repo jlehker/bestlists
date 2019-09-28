@@ -62,7 +62,7 @@ pylint = "*"
 black = "*"
 
 [requires]
-python_version = "3.7.2"
+python_version = "3.7.4"
 
 [pipenv]
 allow_prereleases = true
