@@ -94,7 +94,7 @@ class ListItemUpdate(LoginRequiredMixin, UpdateView):
 list_item_update_view = ListItemUpdate.as_view()
 
 
-class TodoListCreate(LoginRequiredMixin, CreateView):
+class StationCreate(LoginRequiredMixin, CreateView):
     """ Creates a new list for items. """
 
     form_class = StationForm
@@ -106,7 +106,7 @@ class TodoListCreate(LoginRequiredMixin, CreateView):
             return super().post(request, *args, **kwargs)
         except IntegrityError:
             messages.add_message(
-                request, messages.ERROR, "All of your Todo List names must be unique."
+                request, messages.ERROR, "All of your Station names must be unique."
             )
             return redirect(request.POST.get("next", self.success_url))
 
@@ -118,7 +118,7 @@ class TodoListCreate(LoginRequiredMixin, CreateView):
         return self.request.POST.get("next", self.success_url)
 
 
-todo_list_create_view = TodoListCreate.as_view()
+todo_list_create_view = StationCreate.as_view()
 
 
 class TodoListUpdate(LoginRequiredMixin, UpdateView):
