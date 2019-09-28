@@ -29,6 +29,7 @@ django-rest-auth = "*"
 pytz = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
+django-qr-code = "*"
 
 [dev-packages]
 python-slugify = "*"

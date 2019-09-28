@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a4ffed339baf4c3123d4edec5696a1f199efd7238cea7f1d1d651feb420eb273"
+            "sha256": "da4c0a49fd2381b5876ff3d552f6d52a61461c2c2f4589faec10cf0419f37091"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -242,6 +242,14 @@
             ],
             "index": "pypi",
             "version": "==3.0.1"
+        },
+        "django-qr-code": {
+            "hashes": [
+                "sha256:23a8d871aaac5287b827cd9f75f38ca12602b576d527bf34722d97b00f9dbea0",
+                "sha256:cd4eaf77b796f6addcc205a73b227ccfe24c1ff25eb72ea819c5c6cc937effda"
+            ],
+            "index": "pypi",
+            "version": "==1.0.0"
         },
         "django-redis": {
             "hashes": [
@@ -556,6 +564,13 @@
             ],
             "index": "pypi",
             "version": "==2016.6"
+        },
+        "qrcode": {
+            "hashes": [
+                "sha256:3996ee560fc39532910603704c82980ff6d4d5d629f9c3f25f34174ce8606cf5",
+                "sha256:505253854f607f2abf4d16092c61d4e9d511a3b4392e60bff957a68592b04369"
+            ],
+            "version": "==6.1"
         },
         "raven": {
             "hashes": [
