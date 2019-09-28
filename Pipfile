@@ -16,7 +16,6 @@ coreapi = "~=2.3"
 django-storages = {version = "~=1.7",extras = ["boto3"]}
 Pillow = "~=5.3"
 "argon2_cffi" = "~=18.3"
-Django = "*"
 raven = "*"
 psycopg2-binary = "*"
 gunicorn = {extras = ["gevent"],version = "*"}
@@ -30,6 +29,7 @@ pytz = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
 django-qr-code = "*"
+django = "<2.3"
 
 [dev-packages]
 python-slugify = "*"
@@ -48,7 +48,6 @@ pytest-sugar = "*"
 django-debug-toolbar = "*"
 Pillow = "*"
 "argon2_cffi" = "*"
-Django = "*"
 Werkzeug = "*"
 Sphinx = "*"
 factory_boy = "*"
