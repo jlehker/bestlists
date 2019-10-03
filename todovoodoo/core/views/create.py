@@ -6,8 +6,50 @@ from django.urls import reverse_lazy, reverse
 from django.utils.timezone import now, localdate
 from django.views.generic import DeleteView, CreateView, TemplateView, UpdateView
 
-from todovoodoo.core.forms import ListItemForm, TodoListForm, StationForm, StationItemForm
-from todovoodoo.core.models import ListItem, TodoList, Station, StationItem
+from todovoodoo.core.forms import (
+    ListItemForm,
+    TodoListForm,
+    StationForm,
+    StationItemForm,
+    ReportEntryForm,
+)
+from todovoodoo.core.models import ListItem, TodoList, Station, StationItem, ReportEntry
+
+
+class ReportEntryCreateView(CreateView):
+
+    slug_url_kwarg = "pub_id"
+    slug_field = "pub_id"
+    form_class = ReportEntryForm
+    prefix = "report_entry_create"
+    model = ReportEntry
+
+    def get_context_data(self, *args, **kwargs):
+        """Use this to add extra context."""
+        pub_id = self.kwargs["pub_id"]
+        try:
+            station = Station.objects.get(pub_id=pub_id)
+        except Station.DoesNotExist:
+            return redirect(reverse("core:stations-public-view", args=[pub_id]))
+        context = super().get_context_data(**kwargs)
+        context.update({"pub_id": pub_id, "station_description": station.description})
+        return context
+
+    def get_success_url(self):
+        return reverse("core:stations-public-view", args=[self.kwargs["pub_id"]])
+
+    def form_valid(self, form):
+        pub_id = self.kwargs["pub_id"]
+        try:
+            station = Station.objects.get(pub_id=pub_id)
+        except Station.DoesNotExist:
+            return redirect(reverse("core:stations-public-view", args=[pub_id]))
+        form.instance.station = station
+        form.save()
+        return super().form_valid(form)
+
+
+public_station_view = ReportEntryCreateView.as_view()
 
 
 class StationView(LoginRequiredMixin, TemplateView):
@@ -19,7 +61,7 @@ class StationView(LoginRequiredMixin, TemplateView):
         todo_lookup_args = {"pub_id": pub_id} if pub_id is not None else {"name": "main"}
         try:
             station = Station.objects.get(owner=self.request.user, **todo_lookup_args)
-        except TodoList.DoesNotExist:
+        except Station.DoesNotExist:
             return redirect(reverse("core:lists-view"))
         context = super(StationView, self).get_context_data(**kwargs)
         context.update(

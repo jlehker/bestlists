@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Submit Report Entry{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            Guest Reports
+        </div>
+        <div class="card-body">
+            <span class="card-title">{{ station_description }}</span>
+            <form class="form-horizontal" method="post" action="{% url 'core:stations-public-view' pub_id %}">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -111,7 +111,7 @@ class Station(TimeStampedModel):
         unique_together = ("owner", "name")
 
     def get_absolute_url(self):
-        return reverse("core:lists-view", args=[self.pub_id])
+        return reverse("core:stations-public-view", args=[self.pub_id])
 
 
 class StationItem(TimeStampedModel):

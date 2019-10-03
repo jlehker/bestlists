@@ -1,6 +1,7 @@
 from django import forms
+from phonenumber_field.formfields import PhoneNumberField
 
-from todovoodoo.core.models import ListItem, TodoList, Station, StationItem
+from todovoodoo.core.models import ListItem, TodoList, Station, StationItem, ReportEntry
 
 
 class ListItemForm(forms.ModelForm):
@@ -47,9 +48,18 @@ class StationItemForm(forms.ModelForm):
     description = forms.CharField(label="Station Item Description", max_length=255)
 
     def __init__(self, *args, **kwargs):
-        super(ListItemForm, self).__init__(*args, **kwargs)
+        super(StationItemForm, self).__init__(*args, **kwargs)
         self.fields["description"].widget.attrs.update({"autofocus": "autofocus"})
 
     class Meta:
         model = StationItem
         fields = ("description",)
+
+
+class ReportEntryForm(forms.ModelForm):
+    phone_number = PhoneNumberField()
+    description = forms.Textarea()
+
+    class Meta:
+        model = ReportEntry
+        fields = ("phone_number", "description")
