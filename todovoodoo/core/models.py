@@ -9,6 +9,7 @@ from dateutil.rrule import rrule, DAILY, WEEKLY, MONTHLY, YEARLY, weekday
 from django.contrib.postgres import fields
 from django.db import models
 from django.forms import model_to_dict
+from django.urls import reverse
 from django.utils.timezone import localdate, now
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
@@ -108,6 +109,9 @@ class Station(TimeStampedModel):
 
     class Meta:
         unique_together = ("owner", "name")
+
+    def get_absolute_url(self):
+        return reverse("core:lists-view", args=[self.pub_id])
 
 
 class StationItem(TimeStampedModel):

@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% load qr_code %}
 
 {% block title %}Station Configuration{% endblock %}
 
@@ -8,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
-                {% for todo_list in todo_lists %}
+                {% for todo_list in stations %}
                     <li class="nav-item">
                         <a class="nav-link {% if todo_list.pub_id == active_list.pub_id %}active{% endif %}" href="{% url 'core:lists-view' todo_list.pub_id %}">{{ todo_list.name.capitalize }}</a>
                     </li>
@@ -44,7 +43,7 @@
                 </form>
                 <br/>
             <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">
-                {% qr_from_text station_url size="T" image_format="png" error_correction="L" %}
+
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.path }}">
                 {{ list_item_create_form|crispy }}

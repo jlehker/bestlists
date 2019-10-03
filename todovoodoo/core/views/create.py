@@ -10,38 +10,36 @@ from todovoodoo.core.forms import ListItemForm, TodoListForm, StationForm, Stati
 from todovoodoo.core.models import ListItem, TodoList, Station, StationItem
 
 
-class TodoListView(LoginRequiredMixin, TemplateView):
+class StationView(LoginRequiredMixin, TemplateView):
 
-    template_name = "core/todo_list.html"
+    template_name = "core/station_configuration.html"
 
     def get_context_data(self, pub_id=None, **kwargs):
         """Use this to add extra context."""
         todo_lookup_args = {"pub_id": pub_id} if pub_id is not None else {"name": "main"}
         try:
-            todo_list = TodoList.objects.get(owner=self.request.user, **todo_lookup_args)
+            station = Station.objects.get(owner=self.request.user, **todo_lookup_args)
         except TodoList.DoesNotExist:
             return redirect(reverse("core:lists-view"))
-        context = super(TodoListView, self).get_context_data(**kwargs)
-        context["todo_lists"] = TodoList.objects.filter(owner=self.request.user).order_by(
-            "created"
-        )
-        context["list_items"] = todo_list.listitem_set.order_by("-created")
-        context["active_list"] = todo_list
-        context["can_delete"] = True if todo_list.name != "main" else False
-        context["list_item_edit_form"] = ListItemForm(prefix="list_item_edit")
-        context["list_item_create_form"] = ListItemForm(prefix="list_item_create")
-        context["todo_list_form"] = StationForm()
+        context = super(StationView, self).get_context_data(**kwargs)
         context.update(
             {
+                "stations": Station.objects.filter(owner=self.request.user).order_by("created"),
+                "list_items": station.stationitem_set.order_by("-created"),
+                "active_list": station,
+                "can_delete": True if station.name != "main" else False,
+                "list_item_edit_form": ListItemForm(prefix="list_item_edit"),
+                "list_item_create_form": ListItemForm(prefix="list_item_create"),
+                "todo_list_form": StationForm(),
                 "station_url": self.request.build_absolute_uri(
-                    reverse("core:lists-view", args=[todo_list.pub_id])
-                )
+                    reverse("core:lists-view", args=[station.pub_id])
+                ),
             }
         )
         return context
 
 
-todo_list_view = TodoListView.as_view()
+station_view = StationView.as_view()
 
 
 class ListItemCreate(LoginRequiredMixin, CreateView):

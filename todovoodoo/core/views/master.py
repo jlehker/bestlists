@@ -25,6 +25,21 @@ class MasterListView(LoginRequiredMixin, ListView):
 master_list_view = MasterListView.as_view()
 
 
+class TagView(LoginRequiredMixin, ListView):
+    """ Master view that includes all stations QR codes. """
+
+    model = Station
+    template_name = "core/station_tags.html"
+    context_object_name = "stations"
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Station.objects.filter(Q(owner=self.request.user))
+
+
+station_tag_view = TagView.as_view()
+
+
 class ListItemPostpone(LoginRequiredMixin, View):
     """ Handle postponing items to another date. """
 
