@@ -26,7 +26,7 @@ class ReportEntryCreateView(CreateView):
 
     def get_context_data(self, *args, **kwargs):
         """Use this to add extra context."""
-        pub_id = self.kwargs["pub_id"]
+        pub_id = self.kwargs.get("pub_id")
         try:
             station = Station.objects.get(pub_id=pub_id)
         except Station.DoesNotExist:
