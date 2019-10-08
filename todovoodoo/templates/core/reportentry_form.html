@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-body">
             {% if not pub_id %}
-                <span class="card-title">{{ station._description }}</span>
+                <span class="card-title">{{ station.description }}</span>
                 <span class="text-primary text-left">Complete this for a refund of ${{ station.refund_value }}</span>
                 <form class="form-horizontal" method="post" action="{% url 'core:stations-public-view' pub_id %}">
                     {% csrf_token %}
