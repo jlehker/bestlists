@@ -26,13 +26,19 @@ class ReportEntryCreateView(CreateView):
 
     def get_context_data(self, *args, **kwargs):
         """Use this to add extra context."""
+        context = super().get_context_data(**kwargs)
+
         pub_id = self.kwargs.get("pub_id")
+        if not pub_id:
+            return context
+
         try:
             station = Station.objects.get(pub_id=pub_id)
         except Station.DoesNotExist:
             return redirect(reverse("core:stations-public-view", args=[pub_id]))
-        context = super().get_context_data(**kwargs)
-        context.update({"pub_id": pub_id, "station": station})
+        else:
+            context.update({"pub_id": pub_id, "station": station})
+
         return context
 
     def get_success_url(self):
