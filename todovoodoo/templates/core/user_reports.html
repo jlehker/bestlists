@@ -10,32 +10,10 @@
         <div class="card-body">
             <h5 class="card-title">All guest reports are displayed here.</h5>
             <div class="list-group">
-                {% for todo in master_list %}
+                {% for report in reports %}
                     <li class="list-group-item list-group-item-action py-2">
                         <div class="btn-toolbar justify-content-between" role="toolbar">
-                            <span class="font-weight-bold">{{ todo.description }}</span>
-                            <div class="btn-group btn-group-sm" role="group">
-                                <form method="post" action="{% url 'core:complete-item' todo.pub_id %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="next" value="{{ request.path }}">
-                                    <button type="submit" class="btn btn-outline-success"><span class="fa fa-check fa-xs"></span> Mark Complete</button>
-                                </form>
-                                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <span class="fa fa-clock-o fa-xs"></span> Postpone
-                                </button>
-                                <form method="post" action="{% url 'core:postpone-item' todo.pub_id %}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="next" value="{{ request.path }}">
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item" name="days" value="1">Tomorrow</button>
-                                        <button class="dropdown-item" name="days" value="2">Two Days</button>
-                                        <button class="dropdown-item" name="days" value="7">Next Week</button>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Specific Date</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                            <span class="font-weight-bold">{{ report.description }}</span>
                     </li>
                 {% endfor %}
             </div>

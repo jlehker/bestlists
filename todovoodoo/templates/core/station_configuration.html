@@ -7,9 +7,9 @@
     <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
-                {% for todo_list in stations %}
+                {% for station in stations %}
                     <li class="nav-item">
-                        <a class="nav-link {% if todo_list.pub_id == active_list.pub_id %}active{% endif %}" href="{% url 'core:lists-view' todo_list.pub_id %}">{{ todo_list.name.capitalize }}</a>
+                        <a class="nav-link {% if station.pub_id == active_list.pub_id %}active{% endif %}" href="{% url 'core:lists-view' station.pub_id %}">{{ station.name.capitalize }}</a>
                     </li>
                 {% endfor %}
                 <li class="nav-item">
@@ -42,17 +42,19 @@
                     </div>
                 </form>
                 <br/>
-            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">
-
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                {{ list_item_create_form|crispy }}
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary">Create</button>
-                    </div>
-                </div>
-            </form>
+{#            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">#}
+{##}
+{#                {% csrf_token %}#}
+{#                <input type="hidden" name="next" value="{{ request.path }}">#}
+{#                {{ list_item_create_form|crispy }}#}
+{#                <div class="control-group">#}
+{#                    <div class="controls">#}
+{#                        <button type="submit" class="btn btn-primary">Create</button>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </form>#}
+            <div class="text-justify">Description: {{ active_list.description  }}</div>
+            <div class="text-justify">Refund: {{ active_list.refund_value }}</div>
             <br/>
             <div class="list-group">
                 {% for todo in list_items %}

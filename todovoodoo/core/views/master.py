@@ -7,22 +7,22 @@ from django.utils.timezone import now, localdate
 from django.views import View
 from django.views.generic import ListView
 
-from todovoodoo.core.models import Station, ListItem
+from todovoodoo.core.models import Station, ListItem, ReportEntry
 
 
-class MasterListView(LoginRequiredMixin, ListView):
+class UserReportView(LoginRequiredMixin, ListView):
     """ Master view that includes all stations QR codes. """
 
-    model = Station
-    template_name = "core/master_list.html"
-    context_object_name = "master_list"
+    model = ReportEntry
+    template_name = "core/user_reports.html"
+    context_object_name = "reports"
     paginate_by = 10
 
     def get_queryset(self):
-        return Station.objects.filter(Q(owner=self.request.user))
+        return ReportEntry.objects.filter(station__owner=self.request.user)
 
 
-master_list_view = MasterListView.as_view()
+master_list_view = UserReportView.as_view()
 
 
 class TagView(LoginRequiredMixin, ListView):
