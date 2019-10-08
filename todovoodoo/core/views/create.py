@@ -32,11 +32,11 @@ class ReportEntryCreateView(CreateView):
         except Station.DoesNotExist:
             return redirect(reverse("core:stations-public-view", args=[pub_id]))
         context = super().get_context_data(**kwargs)
-        context.update({"pub_id": pub_id, "station_description": station.description})
+        context.update({"pub_id": pub_id, "station": station})
         return context
 
     def get_success_url(self):
-        return reverse("core:stations-public-view", args=[self.kwargs["pub_id"]])
+        return reverse("core:stations-public-view")
 
     def form_valid(self, form):
         pub_id = self.kwargs["pub_id"]

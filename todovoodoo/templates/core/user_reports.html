@@ -10,32 +10,49 @@
         <div class="card-body">
             <h5 class="card-title">All guest reports are displayed here.</h5>
             <div class="list-group">
-                {% for report in reports %}
-                    <li class="list-group-item list-group-item-action py-2">
-                        <div class="btn-toolbar justify-content-between" role="toolbar">
-                            <span class="font-weight-bold">{{ report.description }}</span>
-                    </li>
-                {% endfor %}
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">Station Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for report in reports %}
+                        <tr>
+                            <th scope="row">{{ report.created }}</th>
+                            <td>{{ report.station.name }}</td>
+                            <td>{{ report.phone_number }}</td>
+                            <td>{{ report.description }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <hr />
+            <hr/>
             <nav class="align-self-end">
                 <ul class="pagination">
                     {% if page_obj.has_previous %}
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
                     {% endif %}
 
                     {% for i in paginator.page_range %}
                         {% if page_obj.number == i %}
-                                <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+                            <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a>
+                            </li>
                         {% else %}
                             <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
                         {% endif %}
                     {% endfor %}
 
                     {% if page_obj.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        </li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Next</a></li>
                     {% endif %}
