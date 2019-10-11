@@ -33,6 +33,8 @@ django = "<2.3"
 django-fullurl = "*"
 django-absoluteuri = "*"
 django-slugify-processor = "*"
+django-autoslug = "*"
+django-extensions = "*"
 
 [dev-packages]
 ipdb = "*"

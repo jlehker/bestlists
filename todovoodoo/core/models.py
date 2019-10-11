@@ -11,7 +11,7 @@ from django.db import models
 from django.forms import model_to_dict
 from django.urls import reverse
 from django.utils.timezone import localdate, now
-from django_extensions.db.fields import AutoSlugField
+from autoslug import AutoSlugField
 from django_slugify_processor.text import slugify
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
@@ -103,7 +103,7 @@ class Station(TimeStampedModel):
         default="New Station",
         help_text="Name of the station. (e.g.'Towel Station', 'Bathroom')",
     )
-    slug = AutoSlugField(populate_from=["name", "owner__name"], slugify_function=slugify)
+    slug = AutoSlugField(always_update=True, populate_from="name", slugify=slugify, unique=True)
     description = models.TextField(
         blank=True,
         help_text="Description of what to include in a report entry. (e.g. 'take a picture of the towels')'",
