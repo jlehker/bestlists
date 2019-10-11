@@ -16,9 +16,11 @@
                          alt="{{ station_url }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ station.name }}</h5>
-                    <p class="card-text">{{ station.description }}</p>
                     <p class="card-text">
-                        <small class="text-muted">Refund: ${{ station.refund_value }}</small>
+                        <strong>Refund: ${{ station.refund_value }}</strong>
+                    </p>
+                    <p class="card-text">
+                        <b>{{ station.description }}</b>
                     </p>
                     <p class="card-text">
                         <small class="text-muted">{{ station_url }}</small>
