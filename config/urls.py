@@ -4,6 +4,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views import defaults as default_views
 from django.views.generic import RedirectView, TemplateView
+from qr_code import urls as qr_code_urls
+
+from core.views import public_station_view
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name="core:lists-view")),
@@ -15,6 +18,8 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     path("app/", include("todovoodoo.core.urls", namespace="core")),
     path("api/v1/", include("todovoodoo.api.urls", namespace="todovoodoo.api")),
+    path("qr_code/", include(qr_code_urls, namespace="qr_code")),
+    path("s/<slug:slug>/", view=public_station_view, name="stations-public-view"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

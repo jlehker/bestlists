@@ -32,6 +32,7 @@ django-qr-code = "*"
 django = "<2.3"
 django-fullurl = "*"
 django-absoluteuri = "*"
+django-slugify-processor = "*"
 
 [dev-packages]
 ipdb = "*"

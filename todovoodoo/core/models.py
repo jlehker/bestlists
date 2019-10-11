@@ -11,6 +11,8 @@ from django.db import models
 from django.forms import model_to_dict
 from django.urls import reverse
 from django.utils.timezone import localdate, now
+from django_extensions.db.fields import AutoSlugField
+from django_slugify_processor.text import slugify
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
@@ -101,6 +103,7 @@ class Station(TimeStampedModel):
         default="New Station",
         help_text="Name of the station. (e.g.'Towel Station', 'Bathroom')",
     )
+    slug = AutoSlugField(populate_from=["name", "owner__name"], slugify_function=slugify)
     description = models.TextField(
         blank=True,
         help_text="Description of what to include in a report entry. (e.g. 'take a picture of the towels')'",
@@ -111,7 +114,7 @@ class Station(TimeStampedModel):
         unique_together = ("owner", "name")
 
     def get_absolute_url(self):
-        return reverse("core:stations-public-view", args=[self.pub_id])
+        return reverse("stations-public-view", args=[self.slug])
 
 
 class StationItem(TimeStampedModel):

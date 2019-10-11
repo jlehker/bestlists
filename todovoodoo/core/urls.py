@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+
 
 from todovoodoo.core.views import (
     master_list_view,
@@ -26,5 +27,5 @@ urlpatterns = [
     path("items/update/<uuid:pub_id>/", view=list_item_update_view, name="update-item"),
     path("items/delete/<uuid:pub_id>/", view=list_item_delete_view, name="delete-item"),
     path("public/stations/", view=public_station_view, name="stations-public-view"),
-    path("public/stations/<uuid:pub_id>/", view=public_station_view, name="stations-public-view"),
+    path("public/stations/<slug:slug>/", view=public_station_view, name="stations-public-view"),
 ]

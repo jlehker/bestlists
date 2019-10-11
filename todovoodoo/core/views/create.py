@@ -18,8 +18,8 @@ from todovoodoo.core.models import ListItem, TodoList, Station, StationItem, Rep
 
 class ReportEntryCreateView(CreateView):
 
-    slug_url_kwarg = "pub_id"
-    slug_field = "pub_id"
+    slug_url_kwarg = "slug"
+    slug_field = "slug"
     form_class = ReportEntryForm
     prefix = "report_entry_create"
     model = ReportEntry
@@ -28,16 +28,16 @@ class ReportEntryCreateView(CreateView):
         """Use this to add extra context."""
         context = super().get_context_data(**kwargs)
 
-        pub_id = self.kwargs.get("pub_id")
-        if not pub_id:
+        slug = self.kwargs.get("slug")
+        if not slug:
             return context
 
         try:
-            station = Station.objects.get(pub_id=pub_id)
+            station = Station.objects.get(slug=slug)
         except Station.DoesNotExist:
-            return redirect(reverse("core:stations-public-view", args=[pub_id]))
+            return redirect(reverse("core:stations-public-view"))
         else:
-            context.update({"pub_id": pub_id, "station": station})
+            context.update({"slug": slug, "station": station})
 
         return context
 
@@ -45,11 +45,11 @@ class ReportEntryCreateView(CreateView):
         return reverse("core:stations-public-view")
 
     def form_valid(self, form):
-        pub_id = self.kwargs["pub_id"]
+        slug = self.kwargs["slug"]
         try:
-            station = Station.objects.get(pub_id=pub_id)
+            station = Station.objects.get(slug=slug)
         except Station.DoesNotExist:
-            return redirect(reverse("core:stations-public-view", args=[pub_id]))
+            return redirect(reverse("core:stations-public-view", args=[slug]))
         form.instance.station = station
         form.save()
         return super().form_valid(form)
