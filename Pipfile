@@ -35,6 +35,7 @@ django-absoluteuri = "*"
 django-slugify-processor = "*"
 django-autoslug = "*"
 django-extensions = "*"
+boto3 = "*"
 
 [dev-packages]
 ipdb = "*"
