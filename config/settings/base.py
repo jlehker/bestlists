@@ -237,5 +237,6 @@ SOCIALACCOUNT_ADAPTER = "todovoodoo.users.adapters.SocialAccountAdapter"
 GEOIP_DATABASE = ROOT_DIR.path("config", "geoip", "GeoLiteCity.dat")
 GEOIPV6_DATABASE = ROOT_DIR.path("config", "geoip", "GeoIPv6.dat")
 
-
 APPEND_SLASH = True
+
+PHONENUMBER_DEFAULT_REGION = "US"

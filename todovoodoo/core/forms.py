@@ -1,5 +1,6 @@
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
 
 from todovoodoo.core.models import ListItem, TodoList, Station, StationItem, ReportEntry
 
@@ -57,7 +58,9 @@ class StationItemForm(forms.ModelForm):
 
 
 class ReportEntryForm(forms.ModelForm):
-    phone_number = PhoneNumberField()
+    phone_number = PhoneNumberField(
+        widget=PhoneNumberInternationalFallbackWidget(attrs={"class": "form-control"})
+    )
     description = forms.Textarea()
 
     class Meta:
