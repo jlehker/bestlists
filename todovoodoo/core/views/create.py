@@ -44,7 +44,6 @@ class ReportEntryCreateView(CreateView):
         return reverse("core:stations-public-view")
 
     def form_valid(self, form):
-        breakpoint()
         slug = self.kwargs["slug"]
         try:
             station = Station.objects.get(slug=slug)

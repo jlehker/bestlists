@@ -36,7 +36,6 @@ django-slugify-processor = "*"
 django-autoslug = "*"
 django-extensions = "*"
 boto3 = "*"
-install = "*"
 sorl-thumbnail = "*"
 
 [dev-packages]
