@@ -19,7 +19,7 @@ class UserReportView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return ReportEntry.objects.filter(station__owner=self.request.user)
+        return ReportEntry.objects.filter(station__owner=self.request.user).order_by("created")
 
 
 master_list_view = UserReportView.as_view()

@@ -9,7 +9,12 @@
             {% if slug %}
                 <span class="card-title">{{ station.description }}</span>
                 <span class="text-primary text-left">Complete this for a refund of ${{ station.refund_value }}</span>
-                <form class="form-horizontal" method="post" action="{% url 'stations-public-view' slug %}" enctype="multipart/form-data">
+                <form class="form-horizontal" 
+                    method="post" 
+                    action="{% url 'stations-public-view' slug %}" 
+                    enctype="multipart/form-data"
+                    data-ajax="false"
+                    >
                     {% csrf_token %}
                     {{ form|crispy }}
                     <div class="control-group">
