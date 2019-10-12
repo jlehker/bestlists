@@ -11,7 +11,7 @@ from todovoodoo.core.views import (
     list_item_create_view,
     todo_list_create_view,
     todo_list_update_view,
-    todo_list_delete_view,
+    station_delete_view,
 )
 
 app_name = "core"
@@ -22,7 +22,7 @@ urlpatterns = [
     path("stations/<uuid:pub_id>/", view=station_view, name="lists-view"),
     path("stations/create/", view=todo_list_create_view, name="create-todo-list"),
     path("stations/update/<uuid:pub_id>/", view=todo_list_update_view, name="update-todo-list"),
-    path("stations/delete/<uuid:pub_id>/", view=todo_list_delete_view, name="delete-todo-list"),
+    path("stations/delete/<uuid:pub_id>/", view=station_delete_view, name="delete-station"),
     path("items/create/<uuid:pub_id>/", view=list_item_create_view, name="create-item"),
     path("items/update/<uuid:pub_id>/", view=list_item_update_view, name="update-item"),
     path("items/delete/<uuid:pub_id>/", view=list_item_delete_view, name="delete-item"),

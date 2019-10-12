@@ -9,10 +9,10 @@ pytestmark = pytest.mark.django_db
 def test_delete_list():
     pub_id = uuid.uuid4()
     assert (
-        reverse("core:delete-todo-list", kwargs={"pub_id": str(pub_id)})
+        reverse("core:delete-station", kwargs={"pub_id": str(pub_id)})
         == f"/v0/lists/delete/{pub_id}/"
     )
-    assert resolve(f"/v0/lists/delete/{pub_id}/").view_name == "core:delete-todo-list"
+    assert resolve(f"/v0/lists/delete/{pub_id}/").view_name == "core:delete-station"
 
 
 def test_create_list():

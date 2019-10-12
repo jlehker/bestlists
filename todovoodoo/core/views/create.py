@@ -63,11 +63,11 @@ class StationView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, pub_id=None, **kwargs):
         """Use this to add extra context."""
-        todo_lookup_args = {"pub_id": pub_id} if pub_id is not None else {"name": "main"}
-        try:
-            station = Station.objects.get(owner=self.request.user, **todo_lookup_args)
-        except Station.DoesNotExist:
+        todo_lookup_args = {"pub_id": pub_id} if pub_id is not None else {}
+        station = Station.objects.filter(owner=self.request.user, **todo_lookup_args).first()
+        if not station:
             return redirect(reverse("core:lists-view"))
+
         context = super(StationView, self).get_context_data(**kwargs)
         context.update(
             {
@@ -190,15 +190,15 @@ class TodoListUpdate(LoginRequiredMixin, UpdateView):
 todo_list_update_view = TodoListUpdate.as_view()
 
 
-class TodoListDelete(LoginRequiredMixin, DeleteView):
-    """ Deletes a list. """
+class StationDelete(LoginRequiredMixin, DeleteView):
+    """ Deletes a station. """
 
     slug_url_kwarg = "pub_id"
     slug_field = "pub_id"
     success_url = reverse_lazy("core:lists-view")
 
     def get_queryset(self):
-        return TodoList.objects.filter(owner=self.request.user).exclude(name__iexact="main")
+        return Station.objects.filter(owner=self.request.user)
 
 
-todo_list_delete_view = TodoListDelete.as_view()
+station_delete_view = StationDelete.as_view()

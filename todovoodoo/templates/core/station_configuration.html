@@ -22,7 +22,7 @@
 
         <div class="card-body">
                 <form class="form-horizontal float-right" method="post"
-                      action="{% url 'core:delete-todo-list' active_list.pub_id %}">
+                      action="{% url 'core:delete-station' active_list.pub_id %}">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.path }}">
                     <div class="btn-group btn-group-sm" role="group">
@@ -35,8 +35,8 @@
                                 {% if not can_delete %}disabled{% endif %}><span class="fa fa-edit fa-xs"></span></button>
                         <button type="submit"
                                 class="btn btn-outline-danger"
-                                title="Delete Todo List"
-                                {% if not can_delete %}disabled{% endif %}>
+                                title="Delete Station"
+                        >
                             <span class="fa fa-trash fa-xs"></span>
                         </button>
                     </div>

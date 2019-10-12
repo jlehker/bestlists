@@ -2,7 +2,7 @@ from .create import (
     station_view,
     todo_list_create_view,
     todo_list_update_view,
-    todo_list_delete_view,
+    station_delete_view,
     list_item_create_view,
     list_item_update_view,
     list_item_delete_view,

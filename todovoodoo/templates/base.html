@@ -45,6 +45,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            {% if not slug %}
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'core:lists-view' %}">{% trans "Add/Edit Station Configuration" %}</a>
@@ -72,6 +73,7 @@
                 {# URL provided by django-allauth/account/urls.py #}
                 <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
               </li>
+            {% endif %}
             {% endif %}
           </ul>
         </div>
