@@ -139,5 +139,7 @@ class ReportEntry(TimeStampedModel):
     description = models.TextField(
         blank=True, help_text="Description of the state of the current state of the station."
     )
-    photo_upload = models.FileField(null=True, help_text="Photo taken of the station.")
+    photo_upload = models.ImageField(
+        null=True, upload_to="photos/%Y/%m/%d/", help_text="Photo taken of the station."
+    )
     phone_number = PhoneNumberField(blank=True, help_text="Reporter's phone number.")

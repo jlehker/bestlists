@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static i18n %}
+{% load thumbnail %}
 {% block title %}Guest Reports{% endblock %}
 
 {% block content %}
@@ -17,6 +18,7 @@
                         <th scope="col">Station Name</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Photo</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,6 +28,15 @@
                             <td>{{ report.station.name }}</td>
                             <td>{{ report.phone_number }}</td>
                             <td>{{ report.description }}</td>
+                            <td>
+                                {% if report.photo_upload %}
+                                {% thumbnail report.photo_upload "100x100" crop="center" as im %}
+                                    <a href="{{ report.photo_upload.url }}" >
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                    </a>
+                                {% endthumbnail %}
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

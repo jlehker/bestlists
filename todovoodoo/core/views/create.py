@@ -21,7 +21,6 @@ class ReportEntryCreateView(CreateView):
     slug_url_kwarg = "slug"
     slug_field = "slug"
     form_class = ReportEntryForm
-    prefix = "report_entry_create"
     model = ReportEntry
 
     def get_context_data(self, *args, **kwargs):
@@ -45,6 +44,7 @@ class ReportEntryCreateView(CreateView):
         return reverse("core:stations-public-view")
 
     def form_valid(self, form):
+        breakpoint()
         slug = self.kwargs["slug"]
         try:
             station = Station.objects.get(slug=slug)

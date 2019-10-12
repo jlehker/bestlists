@@ -64,7 +64,7 @@ X_FRAME_OPTIONS = "DENY"
 # ------------------------------------------------------------------------------
 # https://django-storages.readthedocs.io/en/latest/#installation
 INSTALLED_APPS += ["storages"]  # noqa F405
-AWS_S3_ENDPOINT_URL = "https://todovoodoo-image-uploads.sfo2.digitaloceanspaces.com"
+AWS_S3_ENDPOINT_URL = "https://sfo2.digitaloceanspaces.com"
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
 AWS_ACCESS_KEY_ID = env("DJANGO_AWS_ACCESS_KEY_ID")
 # https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html#settings
@@ -85,7 +85,7 @@ AWS_LOCATION = "user-uploads"
 # MEDIA
 # ------------------------------------------------------------------------------
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-MEDIA_URL = f"https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/"
+MEDIA_URL = f"https://{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------

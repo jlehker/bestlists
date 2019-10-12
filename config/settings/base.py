@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
     "easy_timezones",
     "phonenumber_field",
     "absoluteuri",
+    "sorl.thumbnail",
     "qr_code",
 ]
 LOCAL_APPS = [

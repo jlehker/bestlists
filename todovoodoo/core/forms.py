@@ -59,7 +59,6 @@ class StationItemForm(forms.ModelForm):
 class ReportEntryForm(forms.ModelForm):
     phone_number = PhoneNumberField()
     description = forms.Textarea()
-    photo_upload = forms.ImageField()
 
     class Meta:
         model = ReportEntry
