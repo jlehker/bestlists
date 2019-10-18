@@ -1,88 +1,116 @@
 {% extends "base.html" %}
+{% load qr_code %}
+{% load absoluteuri %}
 {% load crispy_forms_tags %}
 
 {% block title %}Station Configuration{% endblock %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-                {% for station in stations %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if station.pub_id == active_list.pub_id %}active{% endif %}" href="{% url 'core:lists-view' station.pub_id %}">{{ station.name.capitalize }}</a>
-                    </li>
-                {% endfor %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="modal" data-target="#createListModal">
-                        <span class="fa fa-plus-square-o fa-lg"></span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            {% for station in stations %}
+            <li class="nav-item">
+                <a class="nav-link {% if station.pub_id == active_list.pub_id %}active{% endif %}"
+                    href="{% url 'core:lists-view' station.pub_id %}">{{ station.name.capitalize }}</a>
+            </li>
+            {% endfor %}
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#createListModal">
+                    <span class="fa fa-plus-square-o fa-lg"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-        <div class="card-body">
-                <form class="form-horizontal float-right" method="post"
-                      action="{% url 'core:delete-station' active_list.pub_id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="next" value="{{ request.path }}">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button"
-                                class="btn btn-outline-info"
-                                data-toggle="modal"
-                                data-target="#editListModal"
-{#                                data-todo-list='{{ active_list.as_json|safe }}'#}
-                                data-list-update-url='{% url 'core:update-todo-list' active_list.pub_id %}'
-                                {% if not can_delete %}disabled{% endif %}><span class="fa fa-edit fa-xs"></span></button>
-                        <button type="submit"
-                                class="btn btn-outline-danger"
-                                title="Delete Station"
-                        >
-                            <span class="fa fa-trash fa-xs"></span>
-                        </button>
+    <div class="card-body">
+        <form class="form-horizontal float-right" method="post"
+            action="{% url 'core:delete-station' active_list.pub_id %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <div class="btn-group btn-group-sm" role="group">
+                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#editListModal"
+                    {#                                data-todo-list='{{ active_list.as_json|safe }}'#}
+                    data-list-update-url='{% url 'core:update-todo-list' active_list.pub_id %}'
+                    {% if not can_delete %}disabled{% endif %}><span class="fa fa-edit fa-xs"></span></button>
+                <button type="submit" class="btn btn-outline-danger" title="Delete Station">
+                    <span class="fa fa-trash fa-xs"></span>
+                </button>
+            </div>
+        </form>
+        <br />
+        {#            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">#}
+        {##}
+        {#                {% csrf_token %}#}
+        {#                <input type="hidden" name="next" value="{{ request.path }}">#}
+        {#                {{ list_item_create_form|crispy }}#}
+        {#                <div class="control-group">#}
+        {#                    <div class="controls">#}
+        {#                        <button type="submit" class="btn btn-primary">Create</button>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </form>#}
+        {% with station_url=active_list.get_absolute_url|absolutize %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-auto">
+                    <small class="text-muted">{{ station_url }}</small>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-auto">
+
+                    <img src="{% qr_url_from_text station_url image_format='png' size='T' %}" class="card-img-top"
+                        alt="{{ station_url }}">
+
+                </div>
+                <div class="col col-lg-2">
+                    <div class="container">
+                        <dev class="row">{{ active_list.name }}</dev>
+                        <dev class="row">{{ active_list.description  }}</dev>
+                        <dev class="row">
+                            <strong>Refund: ${{ active_list.refund_value }}</strong>
+                        </dev>
+
                     </div>
-                </form>
-                <br/>
-{#            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">#}
-{##}
-{#                {% csrf_token %}#}
-{#                <input type="hidden" name="next" value="{{ request.path }}">#}
-{#                {{ list_item_create_form|crispy }}#}
-{#                <div class="control-group">#}
-{#                    <div class="controls">#}
-{#                        <button type="submit" class="btn btn-primary">Create</button>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </form>#}
-            <div class="text-justify">Description: {{ active_list.description  }}</div>
-            <div class="text-justify">Refund: {{ active_list.refund_value }}</div>
-            <br/>
-            <div class="list-group">
-                {% for todo in list_items %}
-                    <li class="list-group-item list-group-item-action py-2">
-                        <div class="btn-toolbar justify-content-between" role="toolbar">
-                            <span class="font-weight-bold">{{ todo.description }}</span>
-                            <form class="form-inline" method="post" action="{% url 'core:delete-item' todo.pub_id %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="next" value="{{ request.path }}">
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-item-always-show="{{ todo.always_show }}" data-item-description="{{ todo.description }}" data-item-update-url="{% url 'core:update-item' todo.pub_id %}" data-target="#editItemModal">
-                                        <span class="fa fa-pencil fa-xs"></span> Edit
-                                    </button>
-                                    <button type="submit" class="btn btn-outline-danger">
-                                        <span class="fa fa-trash-o fa-xs"></span> Delete
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                {% endfor %}
+                </div>
             </div>
         </div>
+        {% endwith %}
+
+        <br />
+        <div class="list-group">
+            {% for todo in list_items %}
+            <li class="list-group-item list-group-item-action py-2">
+                <div class="btn-toolbar justify-content-between" role="toolbar">
+                    <span class="font-weight-bold">{{ todo.description }}</span>
+                    <form class="form-inline" method="post" action="{% url 'core:delete-item' todo.pub_id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-info" data-toggle="modal"
+                                data-item-always-show="{{ todo.always_show }}"
+                                data-item-description="{{ todo.description }}"
+                                data-item-update-url="{% url 'core:update-item' todo.pub_id %}"
+                                data-target="#editItemModal">
+                                <span class="fa fa-pencil fa-xs"></span> Edit
+                            </button>
+                            <button type="submit" class="btn btn-outline-danger">
+                                <span class="fa fa-trash-o fa-xs"></span> Delete
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block modal %}
-    {% include "core/modals/create_list.html" %}
-    {% include "core/modals/edit_item.html" %}
-    {% include "core/modals/edit_list.html" %}
+{% include "core/modals/create_list.html" %}
+{% include "core/modals/edit_item.html" %}
+{% include "core/modals/edit_list.html" %}
 {% endblock %}

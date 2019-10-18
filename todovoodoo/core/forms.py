@@ -1,3 +1,5 @@
+from decimal import Decimal as D
+
 from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
@@ -39,6 +41,9 @@ class TodoListForm(forms.ModelForm):
 class StationForm(forms.ModelForm):
     name = forms.CharField(label="Station Name", max_length=100)
     description = forms.CharField(label="Station Description", max_length=255)
+    refund_value = forms.DecimalField(
+        label="Refund awarded for report.", min_value=D("0"), max_digits=4, decimal_places=2
+    )
 
     class Meta:
         model = Station

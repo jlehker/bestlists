@@ -34,7 +34,8 @@ class ReportEntryCreateView(CreateView):
         try:
             station = Station.objects.get(slug=slug)
         except Station.DoesNotExist:
-            return redirect(reverse("core:stations-public-view"))
+            messages.add_message(self.request, messages.ERROR, "Error finding station.")
+            return context
         else:
             context.update({"slug": slug, "station": station})
 
@@ -152,6 +153,7 @@ class StationCreate(LoginRequiredMixin, CreateView):
     form_class = StationForm
     model = Station
     success_url = reverse_lazy("core:lists-view")
+    template_name = "core/station_configuration.html"
 
     def post(self, request, *args, **kwargs):
         try:
@@ -165,6 +167,10 @@ class StationCreate(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, form.errors)
+        return redirect(self.request.POST.get("next", self.success_url))
 
     def get_success_url(self):
         return self.request.POST.get("next", self.success_url)
