@@ -14,7 +14,7 @@ django-redis = "~=4.10"
 djangorestframework = "*"
 coreapi = "~=2.3"
 django-storages = {version = "~=1.7",extras = ["boto3"]}
-Pillow = "~=5.3"
+Pillow = "~=6.2"
 "argon2_cffi" = "~=18.3"
 raven = "*"
 psycopg2-binary = "*"
