@@ -1,22 +1,21 @@
-from decimal import Decimal
 import datetime
 import json
 import uuid
 from calendar import day_name
+from decimal import Decimal
 
+from autoslug import AutoSlugField
 from dateutil.relativedelta import relativedelta
-from dateutil.rrule import rrule, DAILY, WEEKLY, MONTHLY, YEARLY, weekday
+from dateutil.rrule import DAILY, MONTHLY, WEEKLY, YEARLY, rrule, weekday
 from django.contrib.postgres import fields
 from django.db import models
 from django.forms import model_to_dict
 from django.urls import reverse
 from django.utils.timezone import localdate, now
-from autoslug import AutoSlugField
 from django_slugify_processor.text import slugify
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from phonenumber_field.modelfields import PhoneNumberField
-
 
 from todovoodoo.users.models import User
 
@@ -135,7 +134,7 @@ class ReportEntry(TimeStampedModel):
     A guest user report entry.
     """
 
-    station = models.ForeignKey("Station", on_delete=models.CASCADE)
+    station = models.ForeignKey("Station", null=True, on_delete=models.SET_NULL)
     description = models.TextField(
         blank=True, help_text="Description of the state of the current state of the station."
     )
@@ -143,3 +142,25 @@ class ReportEntry(TimeStampedModel):
         null=True, upload_to="photos/%Y/%m/%d/", help_text="Photo taken of the station."
     )
     phone_number = PhoneNumberField(blank=True, help_text="Reporter's phone number.")
+
+
+class ReportEntryItem(TimeStampedModel):
+    instructions = models.TextField(blank=True)
+    report_entry = models.ForeignKey(
+        "ReportEntry", on_delete=models.CASCADE, related_name="%(class)s_items"
+    )
+
+    class Meta:
+        abstract = True
+
+
+class ReportEntryPhoto(ReportEntryItem):
+    data = models.ImageField(upload_to="photos/%Y/%m/%d/", help_text="Photo to upload.")
+
+
+class ReportEntryBoolean(ReportEntryItem):
+    data = models.BooleanField()
+
+
+class ReportEntryCount(ReportEntryItem):
+    data = models.IntegerField()
