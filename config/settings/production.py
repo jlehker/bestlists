@@ -81,6 +81,11 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 AWS_LOCATION = "user-uploads"
 
+# STATIC
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATIC_URL = f"https://todovoodoo-static.sfo2.cdn.digitaloceanspaces.com/"
 
 # MEDIA
 # ------------------------------------------------------------------------------
