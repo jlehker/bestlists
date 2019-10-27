@@ -79,18 +79,17 @@ _AWS_EXPIRY = 60 * 60 * 24 * 7
 AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": f"max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate"
 }
-AWS_LOCATION = "user-uploads"
 
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-STATIC_URL = f"https://todovoodoo-static.sfo2.cdn.digitaloceanspaces.com/"
+STATIC_URL = "https://todovoodoo-static.sfo2.cdn.digitaloceanspaces.com/"
 
 # MEDIA
 # ------------------------------------------------------------------------------
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-MEDIA_URL = f"https://{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/"
+MEDIA_URL = "https://todovoodoo-static.sfo2.cdn.digitaloceanspaces.com/"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
