@@ -61,13 +61,16 @@ class ReportEntryCreateView(CreateView):
         user = entry.station.owner
         client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
         message = (
-            f"Station: {entry.station.name}\n"
-            f"Phone Number: {entry.phone_number}\n"
-            f"Message:{entry.description}\n"
-            f"Photo: {self.request.build_absolute_uri(entry.photo_upload.url)}\n"
+            f'<b><u>Phone Number</u>  :</b> <font color="#0000ff"><i>{entry.phone_number}</i></font>\n'
+            f'<b><u>Message</u>       :</b> <font color="#0000ff"><i>{entry.description}</i></font>\n'
         )
         im = get_thumbnail(entry.photo_upload, "250x250", crop="center", quality=99)
-        client.send_message(message, attachment=im)
+        client.send_message(
+            message,
+            title=f"User Report: {entry.station.name}",
+            url=self.request.build_absolute_uri(entry.photo_upload.url),
+            attachment=im,
+        )
 
 
 public_station_view = ReportEntryCreateView.as_view()
