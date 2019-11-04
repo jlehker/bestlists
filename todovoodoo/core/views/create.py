@@ -59,6 +59,9 @@ class ReportEntryCreateView(CreateView):
 
     def _send_pushover_notification(self, entry):
         user = entry.station.owner
+        if not (user.pushover_user_key and user.pushover_api_token):
+            return
+
         client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
         message = (
             f'<b><u>Phone Number</u>  :</b> <font color="#0000ff"><i>{entry.phone_number}</i></font>\n'
@@ -67,6 +70,7 @@ class ReportEntryCreateView(CreateView):
         im = get_thumbnail(entry.photo_upload, "250x250", crop="center", quality=99)
         client.send_message(
             message,
+            html=1,
             title=f"User Report: {entry.station.name}",
             url=self.request.build_absolute_uri(entry.photo_upload.url),
             attachment=im,
