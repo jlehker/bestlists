@@ -2,18 +2,20 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.shortcuts import redirect
-from django.urls import reverse_lazy, reverse
-from django.utils.timezone import now, localdate
-from django.views.generic import DeleteView, CreateView, TemplateView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.utils.timezone import localdate, now
+from django.views.generic import CreateView, DeleteView, TemplateView, UpdateView
+from pushover import Client
+from sorl.thumbnail import get_thumbnail
 
 from todovoodoo.core.forms import (
     ListItemForm,
-    TodoListForm,
+    ReportEntryForm,
     StationForm,
     StationItemForm,
-    ReportEntryForm,
+    TodoListForm,
 )
-from todovoodoo.core.models import ListItem, TodoList, Station, StationItem, ReportEntry
+from todovoodoo.core.models import ListItem, ReportEntry, Station, StationItem, TodoList
 
 
 class ReportEntryCreateView(CreateView):
@@ -51,8 +53,21 @@ class ReportEntryCreateView(CreateView):
         except Station.DoesNotExist:
             return redirect(reverse("core:stations-public-view", args=[slug]))
         form.instance.station = station
-        form.save()
+        entry = form.save()
+        self._send_pushover_notification(entry)
         return super().form_valid(form)
+
+    def _send_pushover_notification(self, entry):
+        user = entry.station.owner
+        client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
+        message = (
+            f"Station: {entry.station.name}\n"
+            f"Phone Number: {entry.phone_number}\n"
+            f"Message:{entry.description}\n"
+            f"Photo: {self.request.build_absolute_uri(entry.photo_upload.url)}\n"
+        )
+        im = get_thumbnail(entry.photo_upload, "250x250", crop="center", quality=99)
+        client.send_message(message, attachment=im)
 
 
 public_station_view = ReportEntryCreateView.as_view()
@@ -77,7 +92,7 @@ class StationView(LoginRequiredMixin, TemplateView):
                 "active_list": station,
                 "can_delete": True if station.name != "main" else False,
                 "list_item_edit_form": ListItemForm(prefix="list_item_edit"),
-                "list_item_create_form": ListItemForm(prefix="list_item_create"),
+                "station_item_create_form": StationItemForm(),
                 "todo_list_form": StationForm(),
                 "station_url": self.request.build_absolute_uri(
                     reverse("core:lists-view", args=[station.pub_id])

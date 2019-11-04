@@ -36,6 +36,8 @@ django-extensions = "*"
 boto3 = "*"
 sorl-thumbnail = "*"
 gunicorn = "*"
+django-fernet-fields = "*"
+python-pushover = "*"
 
 [dev-packages]
 ipdb = "*"

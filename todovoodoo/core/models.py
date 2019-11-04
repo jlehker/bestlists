@@ -121,12 +121,15 @@ class StationItem(TimeStampedModel):
     Individual item descriptions for a station.
     """
 
+    ITEM_TYPES = Choices(("text", "Text"), ("boolean", "Boolean"), ("number", "Number"))
+
     station = models.ForeignKey("Station", on_delete=models.CASCADE)
     pub_id = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
     description = models.TextField(
         blank=True,
         help_text="Description of what to include in a report entry. (e.g. 'take a picture of the towels')'",
     )
+    item_type = models.TextField(null=True, choices=ITEM_TYPES, default=ITEM_TYPES.text)
 
 
 class ReportEntry(TimeStampedModel):
@@ -154,13 +157,13 @@ class ReportEntryItem(TimeStampedModel):
         abstract = True
 
 
-class ReportEntryPhoto(ReportEntryItem):
-    data = models.ImageField(upload_to="photos/%Y/%m/%d/", help_text="Photo to upload.")
+class ReportEntryText(ReportEntryItem):
+    data = models.TextField(null=False)
 
 
 class ReportEntryBoolean(ReportEntryItem):
     data = models.BooleanField()
 
 
-class ReportEntryCount(ReportEntryItem):
+class ReportEntryNumber(ReportEntryItem):
     data = models.IntegerField()

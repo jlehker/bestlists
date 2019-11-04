@@ -52,19 +52,22 @@ class StationForm(forms.ModelForm):
 
 class StationItemForm(forms.ModelForm):
     description = forms.CharField(label="Station Item Description", max_length=255)
+    item_type = forms.ChoiceField(choices=StationItem.ITEM_TYPES, required=True)
 
-    def __init__(self, *args, **kwargs):
-        super(StationItemForm, self).__init__(*args, **kwargs)
-        self.fields["description"].widget.attrs.update({"autofocus": "autofocus"})
+    # def __init__(self, *args, **kwargs):
+    # super(StationItemForm, self).__init__(*args, **kwargs)
+    # self.fields["description"].widget.attrs.update({"autofocus": "autofocus"})
 
     class Meta:
         model = StationItem
-        fields = ("description",)
+        fields = ("description", "item_type")
 
 
 class ReportEntryForm(forms.ModelForm):
     phone_number = PhoneNumberField(
-        widget=PhoneNumberInternationalFallbackWidget(attrs={"class": "form-control"})
+        label="Phone number required for credit.",
+        widget=PhoneNumberInternationalFallbackWidget(attrs={"class": "form-control"}),
+        required=False,
     )
     description = forms.Textarea()
 

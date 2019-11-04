@@ -39,17 +39,7 @@
             </div>
         </form>
         <br />
-        {#            <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">#}
-        {##}
-        {#                {% csrf_token %}#}
-        {#                <input type="hidden" name="next" value="{{ request.path }}">#}
-        {#                {{ list_item_create_form|crispy }}#}
-        {#                <div class="control-group">#}
-        {#                    <div class="controls">#}
-        {#                        <button type="submit" class="btn btn-primary">Create</button>#}
-        {#                    </div>#}
-        {#                </div>#}
-        {#            </form>#}
+
         {% with station_url=active_list.get_absolute_url|absolutize %}
         <div class="container">
             <div class="row">
@@ -77,7 +67,19 @@
                 </div>
             </div>
         </div>
+        <hr />
         {% endwith %}
+        <h2> Add item to this station </h2>
+        <form class="form-horizontal" method="post" action="{% url 'core:create-item' active_list.pub_id %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            {{ station_item_create_form|crispy }}
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn btn-primary">Add Item</button>
+                </div>
+            </div>
+        </form>
 
         <br />
         <div class="list-group">
