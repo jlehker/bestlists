@@ -67,13 +67,12 @@ class ReportEntryCreateView(CreateView):
             f'<b><u>Phone Number</u>  :</b> <font color="#777"><i>{entry.phone_number}</i></font>\n'
             f'<b><u>Message</u>       :</b> <font color="#777"><i>{entry.description}</i></font>\n'
         )
-        im = get_thumbnail(entry.photo_upload, "250x250", crop="center", quality=99)
         client.send_message(
             message,
             html=1,
             title=f"User Report: {entry.station.name}",
             url=self.request.build_absolute_uri(entry.photo_upload.url),
-            attachment=im,
+            attachment=get_thumbnail(entry.photo_upload, "300", quality=85),
         )
 
 
