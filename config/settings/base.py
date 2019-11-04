@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "absoluteuri",
     "sorl.thumbnail",
+    "django_rq",
     "qr_code",
 ]
 LOCAL_APPS = [
@@ -238,3 +239,10 @@ GEOIPV6_DATABASE = ROOT_DIR.path("config", "geoip", "GeoIPv6.dat")
 APPEND_SLASH = True
 
 PHONENUMBER_DEFAULT_REGION = "US"
+
+RQ_QUEUES = {
+    "pushover": {
+        "URL": env.url("REDIS_URL", default="redis://localhost:6379/0"),
+        "DEFAULT_TIMEOUT": 500,
+    },
+}

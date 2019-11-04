@@ -5,8 +5,6 @@ from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.timezone import localdate, now
 from django.views.generic import CreateView, DeleteView, TemplateView, UpdateView
-from pushover import Client
-from sorl.thumbnail import get_thumbnail
 
 from todovoodoo.core.forms import (
     ListItemForm,
@@ -16,6 +14,7 @@ from todovoodoo.core.forms import (
     TodoListForm,
 )
 from todovoodoo.core.models import ListItem, ReportEntry, Station, StationItem, TodoList
+from todovoodoo.core.tasks import send_pushover_notification
 
 
 class ReportEntryCreateView(CreateView):
@@ -54,28 +53,10 @@ class ReportEntryCreateView(CreateView):
             return redirect(reverse("core:stations-public-view", args=[slug]))
         form.instance.station = station
         entry = form.save()
-        self._send_pushover_notification(entry)
+        send_pushover_notification.delay(
+            entry=entry, photo_url=self.request.build_absolute_uri(entry.photo_upload.url)
+        )
         return super().form_valid(form)
-
-    def _send_pushover_notification(self, entry):
-        user = entry.station.owner
-        if not (user.pushover_user_key and user.pushover_api_token):
-            return
-
-        client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
-        message = (
-            "<b><u>Phone Number</u>  :</b>\n"
-            f'<font color="#777"><i>{entry.phone_number}</i></font>\n'
-            "<b><u>Message</u>       :</b>\n"
-            f'<font color="#777"><i>{entry.description}</i></font>\n'
-        )
-        client.send_message(
-            message,
-            html=1,
-            title=f"User Report: {entry.station.name}",
-            url=self.request.build_absolute_uri(entry.photo_upload.url),
-            attachment=get_thumbnail(entry.photo_upload, "300", quality=85),
-        )
 
 
 public_station_view = ReportEntryCreateView.as_view()

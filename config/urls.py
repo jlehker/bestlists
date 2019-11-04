@@ -22,6 +22,8 @@ urlpatterns = [
     path("s/<slug:slug>/", view=public_station_view, name="stations-public-view"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+urlpatterns += [path("django-rq/", include("django_rq.urls"))]
+
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
