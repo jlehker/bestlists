@@ -135,8 +135,9 @@ class StationItem(TimeStampedModel):
 
 def get_file_path(instance, filename):
     ext = filename.split(".")[-1]
-    filename = "%s.%s" % (uuid.uuid4(), ext)
-    return os.path.join("photos/user_uploads/%Y/%m/%d/", filename)
+    # filename = "%s.%s" % (uuid.uuid4(), ext)
+    # return os.path.join("photos/user_uploads/%Y/%m/%d/", filename)
+    return f"photos/user_uploads/%Y/%m/%d/{uuid.uuid4()}.{ext}"
 
 
 class ReportEntry(TimeStampedModel):

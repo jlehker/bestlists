@@ -38,6 +38,7 @@ sorl-thumbnail = "*"
 gunicorn = "*"
 django-fernet-fields = "*"
 python-pushover = "*"
+django-rq = "*"
 
 [dev-packages]
 ipdb = "*"
