@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import uuid
 from calendar import day_name
 from decimal import Decimal
@@ -132,6 +133,12 @@ class StationItem(TimeStampedModel):
     item_type = models.TextField(null=True, choices=ITEM_TYPES, default=ITEM_TYPES.text)
 
 
+def get_file_path(instance, filename):
+    ext = filename.split(".")[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join("photos/user_uploads/%Y/%m/%d/", filename)
+
+
 class ReportEntry(TimeStampedModel):
     """
     A guest user report entry.
@@ -142,7 +149,7 @@ class ReportEntry(TimeStampedModel):
         blank=True, help_text="Description of the state of the current state of the station."
     )
     photo_upload = models.ImageField(
-        null=True, upload_to="photos/%Y/%m/%d/", help_text="Photo taken of the station."
+        null=True, upload_to=get_file_path, help_text="Photo taken of the station."
     )
     phone_number = PhoneNumberField(blank=True, help_text="Reporter's phone number.")
 
