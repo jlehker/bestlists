@@ -64,8 +64,8 @@ class ReportEntryCreateView(CreateView):
 
         client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
         message = (
-            f'<b><u>Phone Number</u>  :</b> <font color="#0000ff"><i>{entry.phone_number}</i></font>\n'
-            f'<b><u>Message</u>       :</b> <font color="#0000ff"><i>{entry.description}</i></font>\n'
+            f'<b><u>Phone Number</u>  :</b> <font color="#777"><i>{entry.phone_number}</i></font>\n'
+            f'<b><u>Message</u>       :</b> <font color="#777"><i>{entry.description}</i></font>\n'
         )
         im = get_thumbnail(entry.photo_upload, "250x250", crop="center", quality=99)
         client.send_message(
