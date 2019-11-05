@@ -6,7 +6,7 @@ from todovoodoo.core.models import ReportEntry
 
 
 @job("pushover")
-def send_pushover_notification(entry: models.ReportEntry, photo_url: str):
+def send_pushover_notification(entry: ReportEntry, photo_url: str):
     user = entry.station.owner
     if not (user.pushover_user_key and user.pushover_api_token):
         return
