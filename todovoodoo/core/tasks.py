@@ -30,7 +30,9 @@ def send_pushover_notification(entry: ReportEntry, photo_url: str):
 
 
 @job
-def send_message(username: str, message: str):
+def send_message():
+    username = "hatorgippie"
+    message = "test test test"
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:

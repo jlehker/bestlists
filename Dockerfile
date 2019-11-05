@@ -14,10 +14,10 @@ COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
 
 # -- Install project dependencies:
-# RUN set -ex && pipenv install --deploy --system
+RUN set -ex && pipenv install --deploy --system
 
-RUN set -ex && pipenv lock --requirements > /tmp/requirements.txt
-RUN pip install -r /tmp/requirements.txt
+# RUN set -ex && pipenv lock --requirements > /tmp/requirements.txt
+# RUN pip install -r /tmp/requirements.txt
 
 # -- Create Django user:
 RUN addgroup --system django && adduser --system --ingroup django django
