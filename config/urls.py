@@ -6,7 +6,7 @@ from django.views import defaults as default_views
 from django.views.generic import RedirectView, TemplateView
 from qr_code import urls as qr_code_urls
 
-from core.views import public_station_view
+from todovoodoo.core.views import public_station_view
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name="core:lists-view")),
