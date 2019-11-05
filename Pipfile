@@ -39,6 +39,7 @@ gunicorn = "*"
 django-fernet-fields = "*"
 python-pushover = "*"
 django-rq = "*"
+sentry-sdk = "*"
 
 [dev-packages]
 ipdb = "*"
