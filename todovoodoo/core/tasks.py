@@ -1,3 +1,5 @@
+import random
+
 from django_rq import job
 from pushover import Client
 from sorl.thumbnail import get_thumbnail
@@ -31,16 +33,20 @@ def send_pushover_notification(entry: ReportEntry, photo_url: str):
 
 @job
 def send_message():
-    username = "hatorgippie"
-    message = "test test test"
-    try:
-        user = User.objects.get(username=username)
-    except User.DoesNotExist:
-        return
-
-    if not (user.pushover_user_key and user.pushover_api_token):
-        return
-
-    client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
-
-    client.send_message(message, title="Important message from todovoodoo!", priority=1)
+    messages = [
+        "I'm testing sending scheduled messages. Please ignore, or don't I don't care.",
+        "Hey don't forget to submit lots of tests so I can check on load!",
+        "This is pretty cool right? I'm sending these with random priorities so you can see the differences.",
+        "Seriously please help me test! I just found a bug where old notifications had broken links. ",
+        "I think we can use this to publish reports and send them to you periodically",
+        "We can have this tally up the refunds that are due to people at the end of the week.",
+        "Automated reports could be nicer if I can match phone numbers to Airbnb data.",
+    ]
+    priorities = [-1, 0, 1]
+    for user in User.objects.filter(
+        pushover_user_key__isnull=False, pushover_api_token__isnull=False
+    ):
+        message = random.choice(messages)
+        priority = random.choice(priorities)
+        client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
+        client.send_message(message, title="Important message from todovoodoo!", priority=priority)
