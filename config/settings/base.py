@@ -242,7 +242,7 @@ PHONENUMBER_DEFAULT_REGION = "US"
 
 RQ_QUEUES = {
     "pushover": {
-        "URL": env.url("REDIS_URL", default="redis://localhost:6379/0"),
+        "URL": env("REDIS_URL", default="redis://localhost:6379/0"),
         "DEFAULT_TIMEOUT": 500,
     },
 }
