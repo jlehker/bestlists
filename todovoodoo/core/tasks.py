@@ -43,4 +43,4 @@ def send_message():
 
     client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
 
-    client.send_message(message, title="Important message from todovoodoo!", priority=2)
+    client.send_message(message, title="Important message from todovoodoo!", priority=1)
