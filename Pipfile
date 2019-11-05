@@ -40,6 +40,7 @@ django-fernet-fields = "*"
 python-pushover = "*"
 django-rq = "*"
 sentry-sdk = "*"
+django-rq-scheduler = "*"
 
 [dev-packages]
 ipdb = "*"

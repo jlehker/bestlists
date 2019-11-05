@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
     "absoluteuri",
     "sorl.thumbnail",
     "django_rq",
+    "scheduler",
     "qr_code",
 ]
 LOCAL_APPS = [
@@ -241,8 +242,12 @@ APPEND_SLASH = True
 PHONENUMBER_DEFAULT_REGION = "US"
 
 RQ_QUEUES = {
+    "default": {
+        "URL": env("REDIS_URL", default="redis://localhost:6379/0") + "/0",
+        "DEFAULT_TIMEOUT": 500,
+    },
     "pushover": {
-        "URL": env("REDIS_URL", default="redis://localhost:6379/0"),
+        "URL": env("REDIS_URL", default="redis://localhost:6379/1") + "/1",
         "DEFAULT_TIMEOUT": 500,
     },
 }
