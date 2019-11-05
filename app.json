@@ -1,7 +1,10 @@
 {
   "scripts": {
     "dokku": {
-      "predeploy": "/app/manage.py migrate --noinput && /app/manage.py collectstatic --noinput"
+      "predeploy": [
+        "/app/manage.py migrate --noinput && /app/manage.py collectstatic --noinput",
+        "/usr/local/bin/supervisorctl -c /app/config/workers.conf scheduler stop || exit 0"
+      ]
     }
   }
 }

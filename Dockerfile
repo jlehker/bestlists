@@ -6,7 +6,7 @@ ENV LANG C.UTF-8
 ENV PYTHONUNBUFFERED 1
 
 # -- Install system dependencies:
-RUN apt-get update -yqq && apt-get upgrade -yqq && apt-get install -yqq apt-transport-https curl gnupg2
+RUN apt-get update -yqq && apt-get upgrade -yqq && apt-get install -yqq apt-transport-https curl gnupg2 supervisor
 RUN pip -qq install -U pip && pip -qq install pipenv
 
 # -- Adding Pipfiles and package.json
