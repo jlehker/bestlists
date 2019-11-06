@@ -62,14 +62,18 @@ def generate_weekly_report():
     last_week_mon = last_week_sun + relativedelta(weekday=MO(-1))
     for user in User.objects.filter(
         pushover_user_key__isnull=False, pushover_api_token__isnull=False
-    ).prefetch_related("station_set"):
-        entries = (
-            user.station_set.station.filter(created__gte=last_week_mon, created__lte=last_week_sun)
+    ):
+        totals = (
+            ReportEntry.objects.filter(
+                station__owner=user, created__gte=last_week_mon, created__lte=last_week_sun
+            )
             .values("phone_number")
             .annotate(total_refund=Sum("station__refund_value"))
         )
         client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
-        message = "\n".join([f"{entry.phone_number}: ${entry.total_refund}" for entry in entries])
+        message = "\n".join(
+            [f"{total.get('phone_number')}: ${total.get('total_refund')}" for total in totals]
+        )
         client.send_message(
             message,
             title=f"Todovoodoo: Weekly Refund Report ({last_week_mon.isoformat()} -- {last_week_sun.isoformat()})",
