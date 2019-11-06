@@ -37,22 +37,25 @@ def send_pushover_notification(entry: ReportEntry, photo_url: str):
 @job
 def send_message():
     messages = [
-        "I'm testing sending scheduled messages. Please ignore, or don't I don't care.",
-        "Hey don't forget to submit lots of tests so I can check on load!",
-        "This is pretty cool right? I'm sending these with random priorities so you can see the differences.",
-        "Seriously please help me test! I just found a bug where old notifications had broken links. ",
-        "I think we can use this to publish reports and send them to you periodically",
-        "We can have this tally up the refunds that are due to people at the end of the week.",
-        "Automated reports could be nicer if I can match phone numbers to Airbnb data.",
+        "Few reports submitted in the last week. Is the service down?",
+        "Don't forget to submit sample reports so we have test data to work with.",
+        "Do you even test?",
+        "Is anybody out there? Just submit random photos, it's not that hard!",
+        "Testers don’t like to break things; they like to dispel the illusion that things work.",
+        "Pretty good testing is easy to do (that’s partly why some people like to say 'testing is dead'-- they think testing isn't needed as a special focus because they note that anyone can find at least some bugs some of the time). Excellent testing is quite hard to do.",
+        "A pinch of probability is worth a pound of perhaps.",
+        "Testing is not responsible for the bugs inserted into software any more than the sun is responsible for creating dust in the air.",
+        "The problem is not that testing is the bottleneck. The problem is that you don't know what's in the bottle. That’s a problem that testing addresses.",
+        "Discovering the unexpected is more important than confirming the known.",
     ]
-    priorities = [-1, 0, 1]
+    today = localdate(now())
+    last_week = today - relativedelta(weeks=1)
     for user in User.objects.filter(
         pushover_user_key__isnull=False, pushover_api_token__isnull=False
     ):
-        message = random.choice(messages)
-        priority = random.choice(priorities)
-        client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
-        client.send_message(message, title="Important message from todovoodoo!", priority=priority)
+        if ReportEntry.objects.filter(station__owner=user, created__gte=last_week).count() <= 3:
+            client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
+            client.send_message(random.choice(messages), title="Todovoodoo: WARNING!", priority=1)
 
 
 @job
