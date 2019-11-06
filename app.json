@@ -2,7 +2,6 @@
   "scripts": {
     "dokku": {
       "predeploy": "/app/manage.py migrate --noinput && /app/manage.py collectstatic --noinput",
-      "postdeploy": "/usr/bin/supervisorctl -c /app/config/workers.conf start all || true"
     }
   }
 }
