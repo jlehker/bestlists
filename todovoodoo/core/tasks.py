@@ -1,5 +1,8 @@
 import random
 
+from dateutil.relativedelta import MO, SU, relativedelta
+from django.db.models import Avg, Count, Min, Sum
+from django.utils.timezone import localdate, now
 from django_rq import job
 from pushover import Client
 from sorl.thumbnail import get_thumbnail
@@ -50,3 +53,25 @@ def send_message():
         priority = random.choice(priorities)
         client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
         client.send_message(message, title="Important message from todovoodoo!", priority=priority)
+
+
+@job
+def generate_weekly_report():
+    today = localdate(now())
+    last_week_sun = today + relativedelta(weekday=SU(-1))
+    last_week_mon = last_week_sun + relativedelta(weekday=MO(-1))
+    for user in User.objects.filter(
+        pushover_user_key__isnull=False, pushover_api_token__isnull=False
+    ).prefetch_related("station_set"):
+        entries = (
+            user.station_set.station.filter(created__gte=last_week_mon, created__lte=last_week_sun)
+            .values("phone_number")
+            .annotate(total_refund=Sum("station__refund_value"))
+        )
+        client = Client(user_key=user.pushover_user_key, api_token=user.pushover_api_token)
+        message = "\n".join([f"{entry.phone_number}: ${entry.total_refund}" for entry in entries])
+        client.send_message(
+            message,
+            title=f"Todovoodoo: Weekly Refund Report ({last_week_mon.isoformat()} -- {last_week_sun.isoformat()})",
+            priority=1,
+        )
