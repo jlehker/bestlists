@@ -65,13 +65,16 @@ def generate_weekly_report():
     ):
         totals = (
             ReportEntry.objects.filter(
-                station__owner=user  # created__gte=last_week_mon, created__lte=last_week_sun
+                station__owner=user, created__gte=last_week_mon, created__lte=last_week_sun
             )
             .values("phone_number")
             .annotate(total_refund=Sum("station__refund_value"))
         )
         message = "\n".join(
-            [f"{total.get('phone_number')}: ${total.get('total_refund')}" for total in totals]
+            [
+                f"{total.get('phone_number', 'anonymous')}: ${total.get('total_refund')}"
+                for total in totals
+            ]
         )
         if message:
             Client(
