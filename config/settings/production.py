@@ -80,7 +80,7 @@ AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": f"max-age={_AWS_EXPIRY}, s-maxage={_AWS_EXPIRY}, must-revalidate"
 }
 AWS_S3_CUSTOM_DOMAIN = "todovoodoo-static.sfo2.cdn.digitaloceanspaces.com"
-AWS_DEFAULT_ACL = None
+AWS_DEFAULT_ACL = "public-read"
 
 # STATIC
 # ------------------------------------------------------------------------------
