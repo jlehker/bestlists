@@ -1,7 +1,7 @@
 @import "custom_bootstrap_vars";
-@import "~bootswatch/dist/minty/variables";
+@import "~bootswatch/dist/lux/variables";
 @import "~bootstrap/scss/bootstrap";
-@import "~bootswatch/dist/minty/bootswatch";
+@import "~bootswatch/dist/lux/bootswatch";
 @import "~font-awesome/scss/font-awesome";
 
 
@@ -10,7 +10,7 @@
 // project specific CSS goes here
 
 ////////////////////////////////
-		//Variables//
+//Variables//
 ////////////////////////////////
 
 // Alert colors
@@ -23,7 +23,7 @@ $dark-pink: #eed3d7;
 $red: #b94a48;
 
 ////////////////////////////////
-		//Alerts//
+//Alerts//
 ////////////////////////////////
 
 // bootstrap alert CSS, translated to the django-standard levels of

@@ -27,6 +27,7 @@ class ReportEntryCreateView(CreateView):
     def get_context_data(self, *args, **kwargs):
         """Use this to add extra context."""
         context = super().get_context_data(**kwargs)
+        context["hide_nav"] = True
 
         slug = self.kwargs.get("slug")
         if not slug:
