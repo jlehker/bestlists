@@ -44,10 +44,11 @@ class StationForm(forms.ModelForm):
     refund_value = forms.DecimalField(
         label="Refund awarded for report.", min_value=D("0"), max_digits=4, decimal_places=2
     )
+    station_type = forms.ChoiceField(choices=Station.STATION_TYPES, required=True)
 
     class Meta:
         model = Station
-        fields = ("name", "description", "refund_value")
+        fields = ("name", "description", "refund_value", "station_type")
 
 
 class StationItemForm(forms.ModelForm):

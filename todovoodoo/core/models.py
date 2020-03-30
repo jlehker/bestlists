@@ -91,6 +91,8 @@ class Station(TimeStampedModel):
     Stations like "towel rack" or "dish washing station" that are defined by the administrator.
     """
 
+    STATION_TYPES = Choices(("standard", "Standard"), ("checkin", "Check-In/Check-Out"))
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     pub_id = models.UUIDField(
         unique=True,
@@ -109,6 +111,9 @@ class Station(TimeStampedModel):
         help_text="Description of what to include in a report entry. (e.g. 'take a picture of the towels')'",
     )
     refund_value = models.DecimalField(max_digits=9, decimal_places=2, default=Decimal("0"))
+    station_type = models.TextField(
+        null=True, choices=STATION_TYPES, default=STATION_TYPES.standard
+    )
 
     class Meta:
         unique_together = ("owner", "name")
@@ -144,6 +149,8 @@ class ReportEntry(TimeStampedModel):
     A guest user report entry.
     """
 
+    REPORT_TYPES = Choices(("checkout", "Check-Out"), ("checkin", "Check-In"), ("other", "Other"))
+
     station = models.ForeignKey("Station", null=True, on_delete=models.SET_NULL)
     description = models.TextField(
         blank=True, help_text="Description of the state of the current state of the station."
@@ -152,6 +159,7 @@ class ReportEntry(TimeStampedModel):
         null=True, upload_to=get_file_path, help_text="Photo taken of the station."
     )
     phone_number = PhoneNumberField(blank=True, help_text="Reporter's phone number.")
+    report_type = models.TextField(null=True, choices=REPORT_TYPES, default=REPORT_TYPES.other)
 
 
 class ReportEntryItem(TimeStampedModel):
