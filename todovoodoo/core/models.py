@@ -161,6 +161,16 @@ class ReportEntry(TimeStampedModel):
     phone_number = PhoneNumberField(blank=True, help_text="Reporter's phone number.")
     report_type = models.TextField(null=True, choices=REPORT_TYPES, default=REPORT_TYPES.other)
 
+    def set_report_type(self):
+        if self.station and self.station.station_type == Station.STATION_TYPES.checkin:
+            last_entry = ReportEntry.objects.filter(
+                station=self.station, phone_number=self.phone_number
+            ).last()
+            if last_entry.report_type == self.REPORT_TYPES.checkin:
+                self.report_type = self.REPORT_TYPES.checkout
+            else:
+                self.report_type = self.REPORT_TYPES.checkin
+
 
 class ReportEntryItem(TimeStampedModel):
     instructions = models.TextField(blank=True)

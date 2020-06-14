@@ -53,6 +53,7 @@ class ReportEntryCreateView(CreateView):
         except Station.DoesNotExist:
             return redirect(reverse("core:stations-public-view", args=[slug]))
         form.instance.station = station
+        form.instance.set_report_type()
         entry = form.save()
         send_pushover_notification.delay(
             entry=entry, photo_url=self.request.build_absolute_uri(entry.photo_upload.url)

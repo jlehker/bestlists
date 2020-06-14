@@ -21,6 +21,8 @@ def send_pushover_notification(entry: ReportEntry, photo_url: str):
     message = (
         "<b><u>Phone Number</u>:</b> "
         f'<a href="tel:{entry.phone_number}"><i>{entry.phone_number}</i></a>\n'
+        "<b><u>Report Type</u>:</b> "
+        f"{entry.report_type}"
         "\n<b><u>Message</u>:</b>\n"
         f'<font color="#777"><i>{entry.description}</i></font>\n'
     )
