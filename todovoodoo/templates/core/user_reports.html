@@ -15,6 +15,7 @@
                     <tr>
                         <th scope="col">Timestamp</th>
                         <th scope="col">Station Name</th>
+                        <th scope="col">Report Type</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Description</th>
                         <th scope="col">Photo</th>
@@ -25,6 +26,7 @@
                         <tr>
                             <th scope="row">{{ report.created }}</th>
                             <td>{{ report.station.name }}</td>
+                            <td>{{ report.report_type }}</td>
                             <td>{{ report.phone_number }}</td>
                             <td>{{ report.description }}</td>
                             <td>
