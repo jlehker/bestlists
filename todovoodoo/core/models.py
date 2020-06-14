@@ -166,7 +166,7 @@ class ReportEntry(TimeStampedModel):
             last_entry = ReportEntry.objects.filter(
                 station=self.station, phone_number=self.phone_number
             ).last()
-            if last_entry.report_type == self.REPORT_TYPES.checkin:
+            if last_entry and last_entry.report_type == self.REPORT_TYPES.checkin:
                 self.report_type = self.REPORT_TYPES.checkout
             else:
                 self.report_type = self.REPORT_TYPES.checkin
