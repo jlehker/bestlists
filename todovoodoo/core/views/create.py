@@ -74,7 +74,7 @@ class StationView(LoginRequiredMixin, TemplateView):
         context = super(StationView, self).get_context_data(**kwargs)
 
         if not station:
-            return {"stations": []}
+            return {"stations": [], "todo_list_form": StationForm()}
 
         context.update(
             {
