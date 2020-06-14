@@ -20,7 +20,6 @@ urlpatterns = [
     path("api/v1/", include("todovoodoo.api.urls", namespace="todovoodoo.api")),
     path("qr_code/", include(qr_code_urls, namespace="qr_code")),
     path("s/<slug:slug>/", view=public_station_view, name="stations-public-view"),
-    path("progressbarupload/", include("progressbarupload.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [path("django-rq/", include("django_rq.urls"))]

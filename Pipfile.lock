@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "345d66280de571015b7a9030710d8389b5f2a5769e3425094d0540438402d558"
+            "sha256": "42b3792e7205481d34a153da3a0fab5f9ece8436ed4a2716c87fc4dbe14fb9aa"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -285,14 +285,6 @@
             ],
             "index": "pypi",
             "version": "==4.0.0"
-        },
-        "django-progressbarupload": {
-            "hashes": [
-                "sha256:26ed611b189c674f86724c5f8714fd990a3f26c93401ff4cb62954aebda4e4c7",
-                "sha256:957ef23b0432421bd0629302e9a6efb546cdd97bac2fc55e2dd9d7af87937878"
-            ],
-            "index": "pypi",
-            "version": "==0.1.7"
         },
         "django-qr-code": {
             "hashes": [
