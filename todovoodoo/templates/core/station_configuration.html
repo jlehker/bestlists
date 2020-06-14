@@ -23,8 +23,8 @@
         </ul>
     </div>
 
-    <div class="card-body">
     {% if stations|length > 0 %}
+    <div class="card-body">
         <form class="form-horizontal float-right" method="post"
             action="{% url 'core:delete-station' active_list.pub_id %}">
             {% csrf_token %}
@@ -81,7 +81,6 @@
                 </div>
             </div>
         </form>
-        {% endif %}
 
         <br />
         <div class="list-group">
@@ -109,8 +108,8 @@
             </li>
             {% endfor %}
         </div>
-    {% endif %}
     </div>
+    {% endif %}
 </div>
 {% endblock %}
 
