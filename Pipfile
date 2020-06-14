@@ -41,6 +41,7 @@ python-pushover = "*"
 django-rq = "*"
 sentry-sdk = "*"
 django-rq-scheduler = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 ipdb = "*"
