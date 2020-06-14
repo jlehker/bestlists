@@ -197,3 +197,5 @@ RAVEN_CONFIG = {"dsn": SENTRY_DSN}
 # Your stuff...
 # ------------------------------------------------------------------------------
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
+CORS_ORIGIN_REGEX_WHITELIST = [r"^https://todovoodoo-static\w+\.digitaloceanspaces\.com$"]
