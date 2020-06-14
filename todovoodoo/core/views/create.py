@@ -71,10 +71,11 @@ class StationView(LoginRequiredMixin, TemplateView):
         """Use this to add extra context."""
         todo_lookup_args = {"pub_id": pub_id} if pub_id is not None else {}
         station = Station.objects.filter(owner=self.request.user, **todo_lookup_args).first()
-        if not station:
-            return redirect(reverse("core:lists-view"))
-
         context = super(StationView, self).get_context_data(**kwargs)
+
+        if not station:
+            return {"stations": []}
+
         context.update(
             {
                 "stations": Station.objects.filter(owner=self.request.user).order_by("created"),
