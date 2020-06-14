@@ -74,6 +74,7 @@ THIRD_PARTY_APPS = [
     "rest_auth.registration",
     "easy_timezones",
     "phonenumber_field",
+    "progressbarupload",
     "absoluteuri",
     "sorl.thumbnail",
     "django_rq",
@@ -253,3 +254,9 @@ RQ_QUEUES = {
         "DEFAULT_TIMEOUT": 500,
     },
 }
+
+FILE_UPLOAD_HANDLERS = (
+    "progressbarupload.uploadhandler.ProgressBarUploadHandler",
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler",
+)

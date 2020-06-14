@@ -2,6 +2,7 @@
 {% load static i18n %}
 {% block title %}Submit Report Entry{% endblock %}
 {% load crispy_forms_tags %}
+{% load progress_bar %}
 
 {% block content %}
 {% if slug %}
@@ -13,6 +14,7 @@
     {{ form|crispy }}
     <div class="control-group">
         <div class="controls">
+            {% progress_bar %}
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>

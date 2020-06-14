@@ -42,6 +42,7 @@ django-rq = "*"
 sentry-sdk = "*"
 django-rq-scheduler = "*"
 django-cors-headers = "*"
+django-progressbarupload = "*"
 
 [dev-packages]
 ipdb = "*"
